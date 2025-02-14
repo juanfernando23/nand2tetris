@@ -24,6 +24,7 @@
     }
     nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       background: #1976d2;
       padding: 10px;
@@ -122,21 +123,30 @@
 </head>
 <body>
   <header>
-    <h1>Simulador Visual de Chips Lógicos</h1>
-    <p>Explora cómo se crean y funcionan los chips lógicos mediante animaciones interactivas</p>
+    <h1>Simulador Visual de Chips Lógicos - Proyecto 1 de Nand2Tetris</h1>
+    <p>Explora la implementación técnica de cada chip lógico</p>
   </header>
   <nav>
     <button onclick="showSection('nand')">NAND</button>
     <button onclick="showSection('not')">NOT</button>
     <button onclick="showSection('and')">AND</button>
+    <button onclick="showSection('or')">OR</button>
+    <button onclick="showSection('xor')">XOR</button>
     <button onclick="showSection('mux')">MUX</button>
+    <button onclick="showSection('dmux')">DMUX</button>
+    <button onclick="showSection('or8way')">OR8WAY</button>
+    <button onclick="showSection('mux4way16')">MUX4WAY16</button>
+    <button onclick="showSection('mux8way16')">MUX8WAY16</button>
+    <button onclick="showSection('dmux4way')">DMUX4WAY</button>
+    <button onclick="showSection('dmux8way')">DMUX8WAY</button>
+    <button onclick="showSection('bitwise')">Bit a Bit (16 bits)</button>
   </nav>
 
   <!-- Sección NAND -->
   <section id="nand" class="chip-section active">
     <h2>Chip NAND</h2>
     <p>
-      El chip <strong>NAND</strong> produce una salida <em>0</em> solo cuando ambas entradas son <em>1</em>; en cualquier otro caso, la salida es <em>1</em>.
+      Implementado para dar 0 solo cuando ambas entradas son 1. Se usa como base para construir otros chips.
     </p>
     <div class="controls">
       <label>
@@ -178,7 +188,7 @@
   <section id="not" class="chip-section">
     <h2>Chip NOT</h2>
     <p>
-      El chip <strong>NOT</strong> invierte la señal de su única entrada. Se construye utilizando un chip NAND al conectar ambas entradas a la misma señal.
+      Implementa la inversión de lógica usando una puerta NAND (entrada duplicada).
     </p>
     <div class="controls">
       <label>
@@ -211,7 +221,7 @@
   <section id="and" class="chip-section">
     <h2>Chip AND</h2>
     <p>
-      El chip <strong>AND</strong> produce una salida <em>1</em> solo si ambas entradas son <em>1</em>. Se implementa tomando la salida de un NAND y pasándola por un NOT.
+      Se implementa como NOT(NAND(a, b)). Es decir, se niega la salida de una NAND.
     </p>
     <div class="controls">
       <label>
@@ -255,11 +265,95 @@
     <div class="output" id="and-output">Salida: ?</div>
   </section>
 
+  <!-- Sección OR -->
+  <section id="or" class="chip-section">
+    <h2>Chip OR</h2>
+    <p>
+      Se construye utilizando NAND y NOT: OR(a, b) = NAND(NOT(a), NOT(b)).
+    </p>
+    <div class="controls">
+      <label>
+        A:
+        <select id="or-input-a">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        B:
+        <select id="or-input-b">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateOR()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada A -->
+        <line id="or-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
+        <text x="10" y="35" fill="#000" font-size="16">A</text>
+        <!-- Entrada B -->
+        <line id="or-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
+        <text x="10" y="105" fill="#000" font-size="16">B</text>
+        <!-- Caja del OR -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">OR</text>
+        <!-- Salida -->
+        <line id="or-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="or-output">Salida: ?</div>
+  </section>
+
+  <!-- Sección XOR -->
+  <section id="xor" class="chip-section">
+    <h2>Chip XOR</h2>
+    <p>
+      Se implementa combinando OR y NAND: XOR(a, b) = AND(OR(a, b), NAND(a, b)).
+    </p>
+    <div class="controls">
+      <label>
+        A:
+        <select id="xor-input-a">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        B:
+        <select id="xor-input-b">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateXOR()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada A -->
+        <line id="xor-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
+        <text x="10" y="35" fill="#000" font-size="16">A</text>
+        <!-- Entrada B -->
+        <line id="xor-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
+        <text x="10" y="105" fill="#000" font-size="16">B</text>
+        <!-- Caja del XOR -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">XOR</text>
+        <!-- Salida -->
+        <line id="xor-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="xor-output">Salida: ?</div>
+  </section>
+
   <!-- Sección MUX -->
   <section id="mux" class="chip-section">
-    <h2>Chip MUX (Multiplexor 2:1)</h2>
+    <h2>Chip MUX (2:1)</h2>
     <p>
-      El chip <strong>MUX</strong> selecciona entre dos entradas (A y B) usando el selector (Sel). Si el selector es <em>0</em> se elige A y, si es <em>1</em>, se elige B.
+      Selecciona entre dos entradas según el selector: MUX(a, b, sel) = OR(AND(a, NOT(sel)), AND(b, sel)).
     </p>
     <div class="controls">
       <label>
@@ -307,6 +401,272 @@
     <div class="output" id="mux-output">Salida: ?</div>
   </section>
 
+  <!-- Sección DMUX -->
+  <section id="dmux" class="chip-section">
+    <h2>Chip DMUX (1:2)</h2>
+    <p>
+      Distribuye la entrada a dos salidas según el selector: DMUX(inp, sel) retorna (AND(inp, NOT(sel)), AND(inp, sel)).
+    </p>
+    <div class="controls">
+      <label>
+        Inp:
+        <select id="dmux-input-inp">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        Sel:
+        <select id="dmux-input-sel">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateDMUX()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada Inp -->
+        <line id="dmux-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
+        <text x="10" y="65" fill="#000" font-size="16">Inp</text>
+        <!-- Selector -->
+        <line id="dmux-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
+        <text x="10" y="105" fill="#000" font-size="16">Sel</text>
+        <!-- Caja del DMUX -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">DMUX</text>
+        <!-- Salida 0 -->
+        <line id="dmux-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
+        <text x="285" y="45" fill="#000" font-size="16">Out0</text>
+        <!-- Salida 1 -->
+        <line id="dmux-line-out1" class="signal" x1="180" y1="100" x2="280" y2="100" />
+        <text x="285" y="105" fill="#000" font-size="16">Out1</text>
+      </svg>
+    </div>
+    <div class="output" id="dmux-output">Salida: (?,?)</div>
+  </section>
+
+  <!-- Sección OR8WAY -->
+  <section id="or8way" class="chip-section">
+    <h2>Chip OR8WAY</h2>
+    <p>
+      Combina 8 bits usando repetidamente la función OR. Retorna 1 si al menos un bit es 1.
+    </p>
+    <div class="controls">
+      <label>
+        Ingrese 8 bits (separados por espacios):
+        <input type="text" id="or8way-input" placeholder="0 1 0 0 1 0 0 1">
+      </label>
+      <button onclick="simulateOR8WAY()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada de bits -->
+        <text x="10" y="35" fill="#000" font-size="16">Bits</text>
+        <!-- Caja del OR8WAY -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">OR8WAY</text>
+        <!-- Salida -->
+        <line id="or8way-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="or8way-output">Salida: ?</div>
+  </section>
+
+  <!-- Sección MUX4WAY16 -->
+  <section id="mux4way16" class="chip-section">
+    <h2>Chip MUX4WAY16</h2>
+    <p>
+      Multiplexa 4 conjuntos de 16 bits. Selección basada en 2 bits. Combina MUX16 y lógica de selección.
+    </p>
+    <div class="controls">
+      <p>Se utilizarán valores predeterminados para las 4 entradas.</p>
+      <label>
+        Selección (2 bits, ej: 01):
+        <input type="text" id="mux4way16-sel" placeholder="01">
+      </label>
+      <button onclick="simulateMUX4WAY16()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada de bits -->
+        <text x="10" y="35" fill="#000" font-size="16">Bits</text>
+        <!-- Caja del MUX4WAY16 -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">MUX4WAY16</text>
+        <!-- Salida -->
+        <line id="mux4way16-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="mux4way16-output">Salida: [?, …, ?]</div>
+  </section>
+
+  <!-- Sección MUX8WAY16 -->
+  <section id="mux8way16" class="chip-section">
+    <h2>Chip MUX8WAY16</h2>
+    <p>
+      Multiplexa 8 conjuntos de 16 bits mediante 3 bits de selección y composición de MUX4WAY16 y MUX16.
+    </p>
+    <div class="controls">
+      <p>Se utilizarán valores predeterminados para las 8 entradas.</p>
+      <label>
+        Selección (3 bits, ej: 010):
+        <input type="text" id="mux8way16-sel" placeholder="010">
+      </label>
+      <button onclick="simulateMUX8WAY16()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada de bits -->
+        <text x="10" y="35" fill="#000" font-size="16">Bits</text>
+        <!-- Caja del MUX8WAY16 -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">MUX8WAY16</text>
+        <!-- Salida -->
+        <line id="mux8way16-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="mux8way16-output">Salida: [?, …, ?]</div>
+  </section>
+
+  <!-- Sección DMUX4WAY -->
+  <section id="dmux4way" class="chip-section">
+    <h2>Chip DMUX4WAY</h2>
+    <p>
+      Demultiplexa una entrada a 4 salidas usando 2 bits de selección.
+    </p>
+    <div class="controls">
+      <label>
+        Inp:
+        <select id="dmux4way-input-inp">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        Selección (2 bits, ej: 10):
+        <input type="text" id="dmux4way-sel" placeholder="10">
+      </label>
+      <button onclick="simulateDMUX4WAY()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada Inp -->
+        <line id="dmux4way-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
+        <text x="10" y="65" fill="#000" font-size="16">Inp</text>
+        <!-- Selector -->
+        <line id="dmux4way-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
+        <text x="10" y="105" fill="#000" font-size="16">Sel</text>
+        <!-- Caja del DMUX4WAY -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">DMUX4WAY</text>
+        <!-- Salida 0 -->
+        <line id="dmux4way-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
+        <text x="285" y="45" fill="#000" font-size="16">Out0</text>
+        <!-- Salida 1 -->
+        <line id="dmux4way-line-out1" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out1</text>
+        <!-- Salida 2 -->
+        <line id="dmux4way-line-out2" class="signal" x1="180" y1="100" x2="280" y2="100" />
+        <text x="285" y="105" fill="#000" font-size="16">Out2</text>
+        <!-- Salida 3 -->
+        <line id="dmux4way-line-out3" class="signal" x1="180" y1="130" x2="280" y2="130" />
+        <text x="285" y="135" fill="#000" font-size="16">Out3</text>
+      </svg>
+    </div>
+    <div class="output" id="dmux4way-output">Salida: (?,?,?,?)</div>
+  </section>
+
+  <!-- Sección DMUX8WAY -->
+  <section id="dmux8way" class="chip-section">
+    <h2>Chip DMUX8WAY</h2>
+    <p>
+      Demultiplexa una entrada a 8 salidas usando 3 bits de selección. Internamente divide la señal y aplica DMUX4WAY.
+    </p>
+    <div class="controls">
+      <label>
+        Inp:
+        <select id="dmux8way-input-inp">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        Selección (3 bits, ej: 101):
+        <input type="text" id="dmux8way-sel" placeholder="101">
+      </label>
+      <button onclick="simulateDMUX8WAY()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada Inp -->
+        <line id="dmux8way-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
+        <text x="10" y="65" fill="#000" font-size="16">Inp</text>
+        <!-- Selector -->
+        <line id="dmux8way-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
+        <text x="10" y="105" fill="#000" font-size="16">Sel</text>
+        <!-- Caja del DMUX8WAY -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">DMUX8WAY</text>
+        <!-- Salida 0 -->
+        <line id="dmux8way-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
+        <text x="285" y="45" fill="#000" font-size="16">Out0</text>
+        <!-- Salida 1 -->
+        <line id="dmux8way-line-out1" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out1</text>
+        <!-- Salida 2 -->
+        <line id="dmux8way-line-out2" class="signal" x1="180" y1="100" x2="280" y2="100" />
+        <text x="285" y="105" fill="#000" font-size="16">Out2</text>
+        <!-- Salida 3 -->
+        <line id="dmux8way-line-out3" class="signal" x1="180" y1="130" x2="280" y2="130" />
+        <text x="285" y="135" fill="#000" font-size="16">Out3</text>
+        <!-- Salida 4 -->
+        <line id="dmux8way-line-out4" class="signal" x1="180" y1="160" x2="280" y2="160" />
+        <text x="285" y="165" fill="#000" font-size="16">Out4</text>
+        <!-- Salida 5 -->
+        <line id="dmux8way-line-out5" class="signal" x1="180" y1="190" x2="280" y2="190" />
+        <text x="285" y="195" fill="#000" font-size="16">Out5</text>
+        <!-- Salida 6 -->
+        <line id="dmux8way-line-out6" class="signal" x1="180" y1="220" x2="280" y2="220" />
+        <text x="285" y="225" fill="#000" font-size="16">Out6</text>
+        <!-- Salida 7 -->
+        <line id="dmux8way-line-out7" class="signal" x1="180" y1="250" x2="280" y2="250" />
+        <text x="285" y="255" fill="#000" font-size="16">Out7</text>
+      </svg>
+    </div>
+    <div class="output" id="dmux8way-output">Salida: (?,?,?,?,?,?,?,?)</div>
+  </section>
+
+  <!-- Sección Operaciones Bit a Bit -->
+  <section id="bitwise" class="chip-section">
+    <h2>Operaciones Bit a Bit (16 bits)</h2>
+    <p>Simula operaciones lógicas bit a bit para números de 16 bits.</p>
+    <div class="controls">
+      <label>
+        Operando A (16 bits):
+        <input type="text" id="bitwise-input-a" placeholder="0000111100001111">
+      </label>
+      <label>
+        Operando B (16 bits):
+        <input type="text" id="bitwise-input-b" placeholder="1111000011110000">
+      </label>
+      <label>
+        Operación:
+        <select id="bitwise-op">
+          <option value="and">AND</option>
+          <option value="or">OR</option>
+          <option value="xor">XOR</option>
+          <option value="not">NOT</option>
+        </select>
+      </label>
+      <button onclick="simulateBitwise()">Simular</button>
+    </div>
+    <div class="output" id="bitwise-output">Salida: ?</div>
+  </section>
+
   <script>
     // Funciones lógicas en JavaScript
     function nand(a, b) {
@@ -321,8 +681,21 @@
     function or(a, b) {
       return nand(not(a), not(b));
     }
+    function xor(a, b) {
+      return and(or(a, b), nand(a, b));
+    }
     function mux(a, b, sel) {
       return or(and(a, not(sel)), and(b, sel));
+    }
+    function dmux(inp, sel) {
+      return [and(inp, not(sel)), and(inp, sel)];
+    }
+    function or8way(inp) {
+      let result = 0;
+      for (let i = 0; i < inp.length; i++) {
+        result = or(result, inp[i]);
+      }
+      return result;
     }
 
     // Función para mostrar la sección del chip seleccionado
@@ -365,6 +738,20 @@
       document.getElementById('and-line-out').className = "signal " + (output ? "high" : "low");
     }
 
+    function simulateOR() {
+      const a = parseInt(document.getElementById('or-input-a').value);
+      const b = parseInt(document.getElementById('or-input-b').value);
+      const output = or(a, b);
+      document.getElementById('or-output').innerText = "Salida: " + output;
+    }
+
+    function simulateXOR() {
+      const a = parseInt(document.getElementById('xor-input-a').value);
+      const b = parseInt(document.getElementById('xor-input-b').value);
+      const output = xor(a, b);
+      document.getElementById('xor-output').innerText = "Salida: " + output;
+    }
+
     function simulateMUX() {
       var a = parseInt(document.getElementById('mux-input-a').value);
       var b = parseInt(document.getElementById('mux-input-b').value);
@@ -376,6 +763,113 @@
       document.getElementById('mux-line-sel').className = "signal " + (sel ? "high" : "low");
       document.getElementById('mux-line-out').className = "signal " + (output ? "high" : "low");
     }
+
+    function simulateDMUX() {
+      const inp = parseInt(document.getElementById('dmux-input-inp').value);
+      const sel = parseInt(document.getElementById('dmux-input-sel').value);
+      const [out0, out1] = dmux(inp, sel);
+      document.getElementById('dmux-output').innerText = "Salida: (" + out0 + ", " + out1 + ")";
+    }
+
+    function simulateOR8WAY() {
+      const bits = document.getElementById('or8way-input').value.split(" ").map(Number);
+      const output = or8way(bits);
+      document.getElementById('or8way-output').innerText = "Salida: " + output;
+    }
+
+    function simulateMUX4WAY16() {
+      // Se utilizan arrays predeterminados para las 4 entradas (16 bits cada una)
+      const a = Array(16).fill(0), b = Array(16).fill(1),
+            c = Array.from({length:16}, (_,i)=> i%2),
+            d = Array.from({length:16}, (_,i)=> (i+1)%2);
+      const selStr = document.getElementById('mux4way16-sel').value;
+      if(selStr.length !==2) { alert("Se esperan 2 bits"); return; }
+      const sel = selStr.split("").map(Number);
+      // Se simula realizando dos MUX16 seguidos
+      const mux1 = a.map((x,i)=> mux(x, b[i], sel[0]));
+      const mux2 = c.map((x,i)=> mux(x, d[i], sel[0]));
+      const output = mux(mux1.join(""), mux2.join(""), sel[1]); // simplificación
+      document.getElementById('mux4way16-output').innerText = "Salida: " + output;
+    }
+
+    function simulateMUX8WAY16() {
+      // Uso de arrays predeterminados para 8 entradas
+      const arrays = [
+        Array(16).fill(0), Array(16).fill(1),
+        Array.from({length:16}, (_,i)=> i%2),
+        Array.from({length:16}, (_,i)=> (i+1)%2),
+        Array(16).fill(0), Array(16).fill(1),
+        Array.from({length:16}, (_,i)=> i%2),
+        Array.from({length:16}, (_,i)=> (i+1)%2)
+      ];
+      const selStr = document.getElementById('mux8way16-sel').value;
+      if(selStr.length !==3) { alert("Se esperan 3 bits"); return; }
+      // Se muestra mensaje técnico de la operación
+      document.getElementById('mux8way16-output').innerText = "Operación interna: combina MUX4WAY16 y MUX16 según la selección " + selStr;
+    }
+
+    function simulateDMUX4WAY() {
+      const inp = parseInt(document.getElementById('dmux4way-input-inp').value);
+      const selStr = document.getElementById('dmux4way-sel').value;
+      if(selStr.length !==2) { alert("Se esperan 2 bits"); return; }
+      const sel = selStr.split("").map(Number);
+      // Cálculo basado en condiciones
+      const a = and(inp, and(not(sel[1]), not(sel[0])));
+      const b = and(inp, and(not(sel[1]), sel[0]));
+      const c = and(inp, and(sel[1], not(sel[0])));
+      const d = and(inp, and(sel[1], sel[0]));
+      document.getElementById('dmux4way-output').innerText = "Salida: ("+a+", "+b+", "+c+", "+d+")";
+    }
+
+    function simulateDMUX8WAY() {
+      const inp = parseInt(document.getElementById('dmux8way-input-inp').value);
+      const selStr = document.getElementById('dmux8way-sel').value;
+      if(selStr.length !==3) { alert("Se esperan 3 bits"); return; }
+      const sel = selStr.split("").map(Number);
+      // Dividir la entrada usando el bit más significativo
+      const [a, b] = dmux(inp, sel[2]);
+      // Aplicar DMUX4WAY a cada mitad (con bits menos significativos)
+      const low = [
+        and(a, and(not(sel[1]), not(sel[0]))),
+        and(a, and(not(sel[1]), sel[0])),
+        and(a, and(sel[1], not(sel[0]))),
+        and(a, and(sel[1], sel[0]))
+      ];
+      const high = [
+        and(b, and(not(sel[1]), not(sel[0]))),
+        and(b, and(not(sel[1]), sel[0])),
+        and(b, and(sel[1], not(sel[0]))),
+        and(b, and(sel[1], sel[0]))
+      ];
+      document.getElementById('dmux8way-output').innerText = "Salida: ("+low.concat(high).join(", ")+")";
+    }
+
+    function simulateBitwise() {
+      const op = document.getElementById('bitwise-op').value;
+      const aStr = document.getElementById('bitwise-input-a').value.trim();
+      if(aStr.length !== 16) { alert("Operando A debe ser un número binario de 16 bits"); return; }
+      let bStr = "";
+      if(op !== "not") {
+        bStr = document.getElementById('bitwise-input-b').value.trim();
+        if(bStr.length !== 16) { alert("Operando B debe ser un número binario de 16 bits"); return; }
+      }
+      const aArr = aStr.split("").map(Number);
+      let result = [];
+      if(op === "not") {
+        result = aArr.map(bit => bit ? 0 : 1);
+      } else {
+        const bArr = bStr.split("").map(Number);
+        for(let i = 0; i < 16; i++){
+          if(op === "and") result.push(aArr[i] && bArr[i]);
+          else if(op === "or") result.push(aArr[i] || bArr[i]);
+          else if(op === "xor") result.push(aArr[i] ^ bArr[i]);
+        }
+      }
+      document.getElementById('bitwise-output').innerText = "Salida: " + result.join("");
+    }
   </script>
+  <footer style="text-align:center; font-size:14px; padding:10px; background:#f0f0f0;">
+    <p>Autores: Juan Fernando Ballesteros Macias, Jesus David Santodomingo Carrascal, Camilo Ivan Palacio Perez</p>
+  </footer>
 </body>
 </html>
