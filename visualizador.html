@@ -119,6 +119,34 @@
     .signal.low {
       stroke: #1e88e5; /* azul para lógica 0 */
     }
+    /* Nuevos estilos para mostrar tabla de verdad */
+    .chip-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+    .truth-table {
+      width: 40%;
+      background: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .truth-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .truth-table table, .truth-table th, .truth-table td {
+      border: 1px solid #ccc;
+    }
+    .truth-table th, .truth-table td {
+      padding: 5px;
+      text-align: center;
+    }
+    .chip-diagram {
+      width: 55%;
+    }
   </style>
 </head>
 <body>
@@ -165,21 +193,56 @@
       </label>
       <button onclick="simulateNAND()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada A -->
-        <line id="nand-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
-        <text x="10" y="35" fill="#000" font-size="16">A</text>
-        <!-- Entrada B -->
-        <line id="nand-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
-        <text x="10" y="105" fill="#000" font-size="16">B</text>
-        <!-- Caja del NAND -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">NAND</text>
-        <!-- Salida -->
-        <line id="nand-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>A</th>
+              <th>B</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada A -->
+          <line id="nand-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
+          <text x="10" y="35" fill="#000" font-size="16">A</text>
+          <!-- Entrada B -->
+          <line id="nand-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
+          <text x="10" y="105" fill="#000" font-size="16">B</text>
+          <!-- Caja del NAND -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">NAND</text>
+          <!-- Salida -->
+          <line id="nand-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="nand-output">Salida: ?</div>
   </section>
@@ -200,19 +263,41 @@
       </label>
       <button onclick="simulateNOT()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada A -->
-        <line id="not-line-a" class="signal" x1="10" y1="70" x2="100" y2="70" />
-        <text x="10" y="65" fill="#000" font-size="16">A</text>
-        <!-- Caja del NAND usado como NOT -->
-        <rect x="100" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="115" y="70" fill="#000" font-size="18">NAND</text>
-        <text x="110" y="90" fill="#000" font-size="12">(A, A)</text>
-        <!-- Salida -->
-        <line id="not-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>A</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada A -->
+          <line id="not-line-a" class="signal" x1="10" y1="70" x2="100" y2="70" />
+          <text x="10" y="65" fill="#000" font-size="16">A</text>
+          <!-- Caja del NAND usado como NOT -->
+          <rect x="100" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="115" y="70" fill="#000" font-size="18">NAND</text>
+          <text x="110" y="90" fill="#000" font-size="12">(A, A)</text>
+          <!-- Salida -->
+          <line id="not-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="not-output">Salida: ?</div>
   </section>
@@ -240,27 +325,62 @@
       </label>
       <button onclick="simulateAND()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="400" height="200">
-        <!-- Entrada A -->
-        <line id="and-line-a" class="signal" x1="10" y1="50" x2="100" y2="50" />
-        <text x="10" y="45" fill="#000" font-size="16">A</text>
-        <!-- Entrada B -->
-        <line id="and-line-b" class="signal" x1="10" y1="150" x2="100" y2="150" />
-        <text x="10" y="145" fill="#000" font-size="16">B</text>
-        <!-- Caja NAND -->
-        <rect x="100" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="115" y="70" fill="#000" font-size="18">NAND</text>
-        <!-- Línea intermedia para NOT -->
-        <line x1="180" y1="70" x2="220" y2="70" class="signal" id="and-not-line"/>
-        <!-- Caja NOT (NAND usado como NOT) -->
-        <rect x="220" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="235" y="70" fill="#000" font-size="18">NAND</text>
-        <text x="230" y="90" fill="#000" font-size="12">(A,A)</text>
-        <!-- Salida -->
-        <line id="and-line-out" class="signal" x1="300" y1="70" x2="380" y2="70" />
-        <text x="385" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>A</th>
+              <th>B</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="400" height="200">
+          <!-- Entrada A -->
+          <line id="and-line-a" class="signal" x1="10" y1="50" x2="100" y2="50" />
+          <text x="10" y="45" fill="#000" font-size="16">A</text>
+          <!-- Entrada B -->
+          <line id="and-line-b" class="signal" x1="10" y1="150" x2="100" y2="150" />
+          <text x="10" y="145" fill="#000" font-size="16">B</text>
+          <!-- Caja NAND -->
+          <rect x="100" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="115" y="70" fill="#000" font-size="18">NAND</text>
+          <!-- Línea intermedia para NOT -->
+          <line x1="180" y1="70" x2="220" y2="70" class="signal" id="and-not-line"/>
+          <!-- Caja NOT (NAND usado como NOT) -->
+          <rect x="220" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="235" y="70" fill="#000" font-size="18">NAND</text>
+          <text x="230" y="90" fill="#000" font-size="12">(A,A)</text>
+          <!-- Salida -->
+          <line id="and-line-out" class="signal" x1="300" y1="70" x2="380" y2="70" />
+          <text x="385" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="and-output">Salida: ?</div>
   </section>
@@ -288,21 +408,56 @@
       </label>
       <button onclick="simulateOR()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada A -->
-        <line id="or-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
-        <text x="10" y="35" fill="#000" font-size="16">A</text>
-        <!-- Entrada B -->
-        <line id="or-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
-        <text x="10" y="105" fill="#000" font-size="16">B</text>
-        <!-- Caja del OR -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">OR</text>
-        <!-- Salida -->
-        <line id="or-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>A</th>
+              <th>B</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada A -->
+          <line id="or-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
+          <text x="10" y="35" fill="#000" font-size="16">A</text>
+          <!-- Entrada B -->
+          <line id="or-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
+          <text x="10" y="105" fill="#000" font-size="16">B</text>
+          <!-- Caja del OR -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">OR</text>
+          <!-- Salida -->
+          <line id="or-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="or-output">Salida: ?</div>
   </section>
@@ -330,21 +485,56 @@
       </label>
       <button onclick="simulateXOR()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada A -->
-        <line id="xor-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
-        <text x="10" y="35" fill="#000" font-size="16">A</text>
-        <!-- Entrada B -->
-        <line id="xor-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
-        <text x="10" y="105" fill="#000" font-size="16">B</text>
-        <!-- Caja del XOR -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">XOR</text>
-        <!-- Salida -->
-        <line id="xor-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>A</th>
+              <th>B</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada A -->
+          <line id="xor-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
+          <text x="10" y="35" fill="#000" font-size="16">A</text>
+          <!-- Entrada B -->
+          <line id="xor-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
+          <text x="10" y="105" fill="#000" font-size="16">B</text>
+          <!-- Caja del XOR -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">XOR</text>
+          <!-- Salida -->
+          <line id="xor-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="xor-output">Salida: ?</div>
   </section>
@@ -379,24 +569,88 @@
       </label>
       <button onclick="simulateMUX()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="400" height="200">
-        <!-- Entrada A -->
-        <line id="mux-line-a" class="signal" x1="10" y1="50" x2="100" y2="50" />
-        <text x="10" y="45" fill="#000" font-size="16">A</text>
-        <!-- Entrada B -->
-        <line id="mux-line-b" class="signal" x1="10" y1="150" x2="100" y2="150" />
-        <text x="10" y="145" fill="#000" font-size="16">B</text>
-        <!-- Selector -->
-        <line id="mux-line-sel" class="signal" x1="10" y1="100" x2="100" y2="100" />
-        <text x="10" y="95" fill="#000" font-size="16">Sel</text>
-        <!-- Caja MUX -->
-        <rect x="100" y="30" width="100" height="140" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="110" fill="#000" font-size="18">MUX</text>
-        <!-- Salida -->
-        <line id="mux-line-out" class="signal" x1="210" y1="100" x2="380" y2="100" />
-        <text x="385" y="105" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>A</th>
+              <th>B</th>
+              <th>Sel</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="400" height="200">
+          <!-- Entrada A -->
+          <line id="mux-line-a" class="signal" x1="10" y1="50" x2="100" y2="50" />
+          <text x="10" y="45" fill="#000" font-size="16">A</text>
+          <!-- Entrada B -->
+          <line id="mux-line-b" class="signal" x1="10" y1="150" x2="100" y2="150" />
+          <text x="10" y="145" fill="#000" font-size="16">B</text>
+          <!-- Selector -->
+          <line id="mux-line-sel" class="signal" x1="10" y1="100" x2="100" y2="100" />
+          <text x="10" y="95" fill="#000" font-size="16">Sel</text>
+          <!-- Caja MUX -->
+          <rect x="100" y="30" width="100" height="140" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="110" fill="#000" font-size="18">MUX</text>
+          <!-- Salida -->
+          <line id="mux-line-out" class="signal" x1="210" y1="100" x2="380" y2="100" />
+          <text x="385" y="105" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="mux-output">Salida: ?</div>
   </section>
@@ -424,24 +678,64 @@
       </label>
       <button onclick="simulateDMUX()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada Inp -->
-        <line id="dmux-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
-        <text x="10" y="65" fill="#000" font-size="16">Inp</text>
-        <!-- Selector -->
-        <line id="dmux-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
-        <text x="10" y="105" fill="#000" font-size="16">Sel</text>
-        <!-- Caja del DMUX -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">DMUX</text>
-        <!-- Salida 0 -->
-        <line id="dmux-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
-        <text x="285" y="45" fill="#000" font-size="16">Out0</text>
-        <!-- Salida 1 -->
-        <line id="dmux-line-out1" class="signal" x1="180" y1="100" x2="280" y2="100" />
-        <text x="285" y="105" fill="#000" font-size="16">Out1</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Inp</th>
+              <th>Sel</th>
+              <th>Out0</th>
+              <th>Out1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada Inp -->
+          <line id="dmux-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
+          <text x="10" y="65" fill="#000" font-size="16">Inp</text>
+          <!-- Selector -->
+          <line id="dmux-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
+          <text x="10" y="105" fill="#000" font-size="16">Sel</text>
+          <!-- Caja del DMUX -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">DMUX</text>
+          <!-- Salida 0 -->
+          <line id="dmux-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
+          <text x="285" y="45" fill="#000" font-size="16">Out0</text>
+          <!-- Salida 1 -->
+          <line id="dmux-line-out1" class="signal" x1="180" y1="100" x2="280" y2="100" />
+          <text x="285" y="105" fill="#000" font-size="16">Out1</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="dmux-output">Salida: (?,?)</div>
   </section>
@@ -459,17 +753,67 @@
       </label>
       <button onclick="simulateOR8WAY()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada de bits -->
-        <text x="10" y="35" fill="#000" font-size="16">Bits</text>
-        <!-- Caja del OR8WAY -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">OR8WAY</text>
-        <!-- Salida -->
-        <line id="or8way-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Bits</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0 0 0 0 0 0 0 0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0 0 0 0 0 0 0 1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0 0 0 0 0 0 1 0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0 0 0 0 0 1 0 0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0 0 0 0 1 0 0 0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0 0 0 1 0 0 0 0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0 0 1 0 0 0 0 0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>0 1 0 0 0 0 0 0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1 0 0 0 0 0 0 0</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada de bits -->
+          <text x="10" y="35" fill="#000" font-size="16">Bits</text>
+          <!-- Caja del OR8WAY -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">OR8WAY</text>
+          <!-- Salida -->
+          <line id="or8way-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="or8way-output">Salida: ?</div>
   </section>
@@ -488,17 +832,47 @@
       </label>
       <button onclick="simulateMUX4WAY16()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada de bits -->
-        <text x="10" y="35" fill="#000" font-size="16">Bits</text>
-        <!-- Caja del MUX4WAY16 -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">MUX4WAY16</text>
-        <!-- Salida -->
-        <line id="mux4way16-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Sel</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>00</td>
+              <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>[0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>[1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada de bits -->
+          <text x="10" y="35" fill="#000" font-size="16">Bits</text>
+          <!-- Caja del MUX4WAY16 -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">MUX4WAY16</text>
+          <!-- Salida -->
+          <line id="mux4way16-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="mux4way16-output">Salida: [?, …, ?]</div>
   </section>
@@ -517,17 +891,63 @@
       </label>
       <button onclick="simulateMUX8WAY16()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada de bits -->
-        <text x="10" y="35" fill="#000" font-size="16">Bits</text>
-        <!-- Caja del MUX8WAY16 -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">MUX8WAY16</text>
-        <!-- Salida -->
-        <line id="mux8way16-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Sel</th>
+              <th>Salida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>000</td>
+              <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</td>
+            </tr>
+            <tr>
+              <td>001</td>
+              <td>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]</td>
+            </tr>
+            <tr>
+              <td>010</td>
+              <td>[0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]</td>
+            </tr>
+            <tr>
+              <td>011</td>
+              <td>[1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]</td>
+            </tr>
+            <tr>
+              <td>100</td>
+              <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</td>
+            </tr>
+            <tr>
+              <td>101</td>
+              <td>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]</td>
+            </tr>
+            <tr>
+              <td>110</td>
+              <td>[0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]</td>
+            </tr>
+            <tr>
+              <td>111</td>
+              <td>[1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada de bits -->
+          <text x="10" y="35" fill="#000" font-size="16">Bits</text>
+          <!-- Caja del MUX8WAY16 -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">MUX8WAY16</text>
+          <!-- Salida -->
+          <line id="mux8way16-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="mux8way16-output">Salida: [?, …, ?]</div>
   </section>
@@ -552,30 +972,112 @@
       </label>
       <button onclick="simulateDMUX4WAY()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada Inp -->
-        <line id="dmux4way-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
-        <text x="10" y="65" fill="#000" font-size="16">Inp</text>
-        <!-- Selector -->
-        <line id="dmux4way-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
-        <text x="10" y="105" fill="#000" font-size="16">Sel</text>
-        <!-- Caja del DMUX4WAY -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">DMUX4WAY</text>
-        <!-- Salida 0 -->
-        <line id="dmux4way-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
-        <text x="285" y="45" fill="#000" font-size="16">Out0</text>
-        <!-- Salida 1 -->
-        <line id="dmux4way-line-out1" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out1</text>
-        <!-- Salida 2 -->
-        <line id="dmux4way-line-out2" class="signal" x1="180" y1="100" x2="280" y2="100" />
-        <text x="285" y="105" fill="#000" font-size="16">Out2</text>
-        <!-- Salida 3 -->
-        <line id="dmux4way-line-out3" class="signal" x1="180" y1="130" x2="280" y2="130" />
-        <text x="285" y="135" fill="#000" font-size="16">Out3</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Inp</th>
+              <th>Sel</th>
+              <th>Out0</th>
+              <th>Out1</th>
+              <th>Out2</th>
+              <th>Out3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>00</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>01</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>10</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>11</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>00</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>01</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>10</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>11</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada Inp -->
+          <line id="dmux4way-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
+          <text x="10" y="65" fill="#000" font-size="16">Inp</text>
+          <!-- Selector -->
+          <line id="dmux4way-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
+          <text x="10" y="105" fill="#000" font-size="16">Sel</text>
+          <!-- Caja del DMUX4WAY -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">DMUX4WAY</text>
+          <!-- Salida 0 -->
+          <line id="dmux4way-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
+          <text x="285" y="45" fill="#000" font-size="16">Out0</text>
+          <!-- Salida 1 -->
+          <line id="dmux4way-line-out1" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out1</text>
+          <!-- Salida 2 -->
+          <line id="dmux4way-line-out2" class="signal" x1="180" y1="100" x2="280" y2="100" />
+          <text x="285" y="105" fill="#000" font-size="16">Out2</text>
+          <!-- Salida 3 -->
+          <line id="dmux4way-line-out3" class="signal" x1="180" y1="130" x2="280" y2="130" />
+          <text x="285" y="135" fill="#000" font-size="16">Out3</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="dmux4way-output">Salida: (?,?,?,?)</div>
   </section>
@@ -600,42 +1102,256 @@
       </label>
       <button onclick="simulateDMUX8WAY()">Simular</button>
     </div>
-    <div class="chip-diagram">
-      <svg width="300" height="150">
-        <!-- Entrada Inp -->
-        <line id="dmux8way-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
-        <text x="10" y="65" fill="#000" font-size="16">Inp</text>
-        <!-- Selector -->
-        <line id="dmux8way-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
-        <text x="10" y="105" fill="#000" font-size="16">Sel</text>
-        <!-- Caja del DMUX8WAY -->
-        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
-        <text x="125" y="80" fill="#000" font-size="18">DMUX8WAY</text>
-        <!-- Salida 0 -->
-        <line id="dmux8way-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
-        <text x="285" y="45" fill="#000" font-size="16">Out0</text>
-        <!-- Salida 1 -->
-        <line id="dmux8way-line-out1" class="signal" x1="180" y1="70" x2="280" y2="70" />
-        <text x="285" y="75" fill="#000" font-size="16">Out1</text>
-        <!-- Salida 2 -->
-        <line id="dmux8way-line-out2" class="signal" x1="180" y1="100" x2="280" y2="100" />
-        <text x="285" y="105" fill="#000" font-size="16">Out2</text>
-        <!-- Salida 3 -->
-        <line id="dmux8way-line-out3" class="signal" x1="180" y1="130" x2="280" y2="130" />
-        <text x="285" y="135" fill="#000" font-size="16">Out3</text>
-        <!-- Salida 4 -->
-        <line id="dmux8way-line-out4" class="signal" x1="180" y1="160" x2="280" y2="160" />
-        <text x="285" y="165" fill="#000" font-size="16">Out4</text>
-        <!-- Salida 5 -->
-        <line id="dmux8way-line-out5" class="signal" x1="180" y1="190" x2="280" y2="190" />
-        <text x="285" y="195" fill="#000" font-size="16">Out5</text>
-        <!-- Salida 6 -->
-        <line id="dmux8way-line-out6" class="signal" x1="180" y1="220" x2="280" y2="220" />
-        <text x="285" y="225" fill="#000" font-size="16">Out6</text>
-        <!-- Salida 7 -->
-        <line id="dmux8way-line-out7" class="signal" x1="180" y1="250" x2="280" y2="250" />
-        <text x="285" y="255" fill="#000" font-size="16">Out7</text>
-      </svg>
+    <div class="chip-display">
+      <div class="truth-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Inp</th>
+              <th>Sel</th>
+              <th>Out0</th>
+              <th>Out1</th>
+              <th>Out2</th>
+              <th>Out3</th>
+              <th>Out4</th>
+              <th>Out5</th>
+              <th>Out6</th>
+              <th>Out7</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>000</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>001</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>010</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>011</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>100</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>101</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>110</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>111</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>000</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>001</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>010</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>011</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>100</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>101</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>110</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>111</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chip-diagram">
+        <svg width="300" height="150">
+          <!-- Entrada Inp -->
+          <line id="dmux8way-line-inp" class="signal" x1="10" y1="70" x2="100" y2="70" />
+          <text x="10" y="65" fill="#000" font-size="16">Inp</text>
+          <!-- Selector -->
+          <line id="dmux8way-line-sel" class="signal" x1="10" y1="110" x2="100" y2="110" />
+          <text x="10" y="105" fill="#000" font-size="16">Sel</text>
+          <!-- Caja del DMUX8WAY -->
+          <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+          <text x="125" y="80" fill="#000" font-size="18">DMUX8WAY</text>
+          <!-- Salida 0 -->
+          <line id="dmux8way-line-out0" class="signal" x1="180" y1="40" x2="280" y2="40" />
+          <text x="285" y="45" fill="#000" font-size="16">Out0</text>
+          <!-- Salida 1 -->
+          <line id="dmux8way-line-out1" class="signal" x1="180" y1="70" x2="280" y2="70" />
+          <text x="285" y="75" fill="#000" font-size="16">Out1</text>
+          <!-- Salida 2 -->
+          <line id="dmux8way-line-out2" class="signal" x1="180" y1="100" x2="280" y2="100" />
+          <text x="285" y="105" fill="#000" font-size="16">Out2</text>
+          <!-- Salida 3 -->
+          <line id="dmux8way-line-out3" class="signal" x1="180" y1="130" x2="280" y2="130" />
+          <text x="285" y="135" fill="#000" font-size="16">Out3</text>
+          <!-- Salida 4 -->
+          <line id="dmux8way-line-out4" class="signal" x1="180" y1="160" x2="280" y2="160" />
+          <text x="285" y="165" fill="#000" font-size="16">Out4</text>
+          <!-- Salida 5 -->
+          <line id="dmux8way-line-out5" class="signal" x1="180" y1="190" x2="280" y2="190" />
+          <text x="285" y="195" fill="#000" font-size="16">Out5</text>
+          <!-- Salida 6 -->
+          <line id="dmux8way-line-out6" class="signal" x1="180" y1="220" x2="280" y2="220" />
+          <text x="285" y="225" fill="#000" font-size="16">Out6</text>
+          <!-- Salida 7 -->
+          <line id="dmux8way-line-out7" class="signal" x1="180" y1="250" x2="280" y2="250" />
+          <text x="285" y="255" fill="#000" font-size="16">Out7</text>
+        </svg>
+      </div>
     </div>
     <div class="output" id="dmux8way-output">Salida: (?,?,?,?,?,?,?,?)</div>
   </section>
