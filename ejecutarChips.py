@@ -78,8 +78,12 @@ def test_compuestos():
         print("1. OR8WAY\n2. MUX4WAY16\n3. MUX8WAY16\n4. DMUX4WAY\n5. DMUX8WAY")
         opcion = input("Elige una opción: ")
         if opcion == "1":
-            # Ejemplo: 8 bits ingresados separados por espacios
-            bits = input("Ingresa 8 bits separados por espacios: ").split()
+            # Se espera siempre una cadena de 8 dígitos, ej: 00000001
+            entrada = input("Ingresa 8 bits pegados (ej: 00000001): ").strip()
+            if len(entrada) != 8:
+                print("Se esperaban 8 bits.")
+                return
+            bits = list(entrada)
             if len(bits) != 8:
                 print("Se esperaban 8 bits.")
                 return
