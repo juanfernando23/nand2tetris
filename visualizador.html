@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador Visual de Chips Lógicos</title>
+  <style>
+    /* Estilos generales y fondo degradado */
+    body {
+      background: linear-gradient(to bottom right, #2196F3, #21CBF3);
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #0d47a1;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    header p {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #1976d2;
+      padding: 10px;
+    }
+    nav button {
+      background: #64b5f6;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 16px;
+      color: #fff;
+    }
+    nav button:hover {
+      background: #42a5f5;
+    }
+    .chip-section {
+      display: none;
+      padding: 20px;
+      background: #fff;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .chip-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chip-section h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+    .chip-section p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .controls label {
+      margin: 10px;
+      font-size: 18px;
+    }
+    .controls select {
+      margin-left: 5px;
+      font-size: 16px;
+    }
+    .controls button {
+      background: #0d47a1;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .controls button:hover {
+      background: #1565c0;
+    }
+    .chip-diagram {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .output {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    /* Estilos para las líneas de señal en los diagramas SVG */
+    .signal {
+      stroke: #888;
+      stroke-width: 4;
+      transition: stroke 0.5s;
+    }
+    .signal.high {
+      stroke: #e53935; /* rojo para lógica 1 */
+    }
+    .signal.low {
+      stroke: #1e88e5; /* azul para lógica 0 */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Simulador Visual de Chips Lógicos</h1>
+    <p>Explora cómo se crean y funcionan los chips lógicos mediante animaciones interactivas</p>
+  </header>
+  <nav>
+    <button onclick="showSection('nand')">NAND</button>
+    <button onclick="showSection('not')">NOT</button>
+    <button onclick="showSection('and')">AND</button>
+    <button onclick="showSection('mux')">MUX</button>
+  </nav>
+
+  <!-- Sección NAND -->
+  <section id="nand" class="chip-section active">
+    <h2>Chip NAND</h2>
+    <p>
+      El chip <strong>NAND</strong> produce una salida <em>0</em> solo cuando ambas entradas son <em>1</em>; en cualquier otro caso, la salida es <em>1</em>.
+    </p>
+    <div class="controls">
+      <label>
+        A:
+        <select id="nand-input-a">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        B:
+        <select id="nand-input-b">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateNAND()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada A -->
+        <line id="nand-line-a" class="signal" x1="10" y1="40" x2="100" y2="40" />
+        <text x="10" y="35" fill="#000" font-size="16">A</text>
+        <!-- Entrada B -->
+        <line id="nand-line-b" class="signal" x1="10" y1="110" x2="100" y2="110" />
+        <text x="10" y="105" fill="#000" font-size="16">B</text>
+        <!-- Caja del NAND -->
+        <rect x="100" y="20" width="80" height="100" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="80" fill="#000" font-size="18">NAND</text>
+        <!-- Salida -->
+        <line id="nand-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="nand-output">Salida: ?</div>
+  </section>
+
+  <!-- Sección NOT -->
+  <section id="not" class="chip-section">
+    <h2>Chip NOT</h2>
+    <p>
+      El chip <strong>NOT</strong> invierte la señal de su única entrada. Se construye utilizando un chip NAND al conectar ambas entradas a la misma señal.
+    </p>
+    <div class="controls">
+      <label>
+        A:
+        <select id="not-input-a">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateNOT()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="300" height="150">
+        <!-- Entrada A -->
+        <line id="not-line-a" class="signal" x1="10" y1="70" x2="100" y2="70" />
+        <text x="10" y="65" fill="#000" font-size="16">A</text>
+        <!-- Caja del NAND usado como NOT -->
+        <rect x="100" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="115" y="70" fill="#000" font-size="18">NAND</text>
+        <text x="110" y="90" fill="#000" font-size="12">(A, A)</text>
+        <!-- Salida -->
+        <line id="not-line-out" class="signal" x1="180" y1="70" x2="280" y2="70" />
+        <text x="285" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="not-output">Salida: ?</div>
+  </section>
+
+  <!-- Sección AND -->
+  <section id="and" class="chip-section">
+    <h2>Chip AND</h2>
+    <p>
+      El chip <strong>AND</strong> produce una salida <em>1</em> solo si ambas entradas son <em>1</em>. Se implementa tomando la salida de un NAND y pasándola por un NOT.
+    </p>
+    <div class="controls">
+      <label>
+        A:
+        <select id="and-input-a">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        B:
+        <select id="and-input-b">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateAND()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="400" height="200">
+        <!-- Entrada A -->
+        <line id="and-line-a" class="signal" x1="10" y1="50" x2="100" y2="50" />
+        <text x="10" y="45" fill="#000" font-size="16">A</text>
+        <!-- Entrada B -->
+        <line id="and-line-b" class="signal" x1="10" y1="150" x2="100" y2="150" />
+        <text x="10" y="145" fill="#000" font-size="16">B</text>
+        <!-- Caja NAND -->
+        <rect x="100" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="115" y="70" fill="#000" font-size="18">NAND</text>
+        <!-- Línea intermedia para NOT -->
+        <line x1="180" y1="70" x2="220" y2="70" class="signal" id="and-not-line"/>
+        <!-- Caja NOT (NAND usado como NOT) -->
+        <rect x="220" y="30" width="80" height="80" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="235" y="70" fill="#000" font-size="18">NAND</text>
+        <text x="230" y="90" fill="#000" font-size="12">(A,A)</text>
+        <!-- Salida -->
+        <line id="and-line-out" class="signal" x1="300" y1="70" x2="380" y2="70" />
+        <text x="385" y="75" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="and-output">Salida: ?</div>
+  </section>
+
+  <!-- Sección MUX -->
+  <section id="mux" class="chip-section">
+    <h2>Chip MUX (Multiplexor 2:1)</h2>
+    <p>
+      El chip <strong>MUX</strong> selecciona entre dos entradas (A y B) usando el selector (Sel). Si el selector es <em>0</em> se elige A y, si es <em>1</em>, se elige B.
+    </p>
+    <div class="controls">
+      <label>
+        A:
+        <select id="mux-input-a">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        B:
+        <select id="mux-input-b">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <label>
+        Sel:
+        <select id="mux-input-sel">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </label>
+      <button onclick="simulateMUX()">Simular</button>
+    </div>
+    <div class="chip-diagram">
+      <svg width="400" height="200">
+        <!-- Entrada A -->
+        <line id="mux-line-a" class="signal" x1="10" y1="50" x2="100" y2="50" />
+        <text x="10" y="45" fill="#000" font-size="16">A</text>
+        <!-- Entrada B -->
+        <line id="mux-line-b" class="signal" x1="10" y1="150" x2="100" y2="150" />
+        <text x="10" y="145" fill="#000" font-size="16">B</text>
+        <!-- Selector -->
+        <line id="mux-line-sel" class="signal" x1="10" y1="100" x2="100" y2="100" />
+        <text x="10" y="95" fill="#000" font-size="16">Sel</text>
+        <!-- Caja MUX -->
+        <rect x="100" y="30" width="100" height="140" fill="#fafafa" stroke="#000" stroke-width="2" rx="10" ry="10"/>
+        <text x="125" y="110" fill="#000" font-size="18">MUX</text>
+        <!-- Salida -->
+        <line id="mux-line-out" class="signal" x1="210" y1="100" x2="380" y2="100" />
+        <text x="385" y="105" fill="#000" font-size="16">Out</text>
+      </svg>
+    </div>
+    <div class="output" id="mux-output">Salida: ?</div>
+  </section>
+
+  <script>
+    // Funciones lógicas en JavaScript
+    function nand(a, b) {
+      return (a === 1 && b === 1) ? 0 : 1;
+    }
+    function not(a) {
+      return nand(a, a);
+    }
+    function and(a, b) {
+      return not(nand(a, b));
+    }
+    function or(a, b) {
+      return nand(not(a), not(b));
+    }
+    function mux(a, b, sel) {
+      return or(and(a, not(sel)), and(b, sel));
+    }
+
+    // Función para mostrar la sección del chip seleccionado
+    function showSection(sectionId) {
+      var sections = document.getElementsByClassName('chip-section');
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].classList.remove('active');
+      }
+      document.getElementById(sectionId).classList.add('active');
+    }
+
+    // Simulación interactiva de cada chip
+    function simulateNAND() {
+      var a = parseInt(document.getElementById('nand-input-a').value);
+      var b = parseInt(document.getElementById('nand-input-b').value);
+      var output = nand(a, b);
+      document.getElementById('nand-output').innerText = "Salida: " + output;
+      document.getElementById('nand-line-a').className = "signal " + (a ? "high" : "low");
+      document.getElementById('nand-line-b').className = "signal " + (b ? "high" : "low");
+      document.getElementById('nand-line-out').className = "signal " + (output ? "high" : "low");
+    }
+
+    function simulateNOT() {
+      var a = parseInt(document.getElementById('not-input-a').value);
+      var output = not(a);
+      document.getElementById('not-output').innerText = "Salida: " + output;
+      document.getElementById('not-line-a').className = "signal " + (a ? "high" : "low");
+      document.getElementById('not-line-out').className = "signal " + (output ? "high" : "low");
+    }
+
+    function simulateAND() {
+      var a = parseInt(document.getElementById('and-input-a').value);
+      var b = parseInt(document.getElementById('and-input-b').value);
+      var nandResult = nand(a, b);
+      var output = not(nandResult);
+      document.getElementById('and-output').innerText = "Salida: " + output;
+      document.getElementById('and-line-a').className = "signal " + (a ? "high" : "low");
+      document.getElementById('and-line-b').className = "signal " + (b ? "high" : "low");
+      document.getElementById('and-not-line').className = "signal " + (nandResult ? "high" : "low");
+      document.getElementById('and-line-out').className = "signal " + (output ? "high" : "low");
+    }
+
+    function simulateMUX() {
+      var a = parseInt(document.getElementById('mux-input-a').value);
+      var b = parseInt(document.getElementById('mux-input-b').value);
+      var sel = parseInt(document.getElementById('mux-input-sel').value);
+      var output = mux(a, b, sel);
+      document.getElementById('mux-output').innerText = "Salida: " + output;
+      document.getElementById('mux-line-a').className = "signal " + (a ? "high" : "low");
+      document.getElementById('mux-line-b').className = "signal " + (b ? "high" : "low");
+      document.getElementById('mux-line-sel').className = "signal " + (sel ? "high" : "low");
+      document.getElementById('mux-line-out').className = "signal " + (output ? "high" : "low");
+    }
+  </script>
+</body>
+</html>
