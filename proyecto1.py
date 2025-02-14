@@ -157,3 +157,45 @@ def DMUX8WAY(inp, sel):
     low_group = DMUX4WAY(a, [sel[1], sel[0]])
     high_group = DMUX4WAY(b, [sel[1], sel[0]])
     return low_group + high_group
+
+if __name__ == "__main__":
+    print("=== Pruebas directas de Proyecto1 ===")
+
+    # Pruebas de puertas elementales (1 bit)
+    print("NAND(1,1):", NAND(1, 1))    # Esperado: 0
+    print("NOT(1):", NOT(1))          # Esperado: 0
+    print("AND(1,1):", AND(1, 1))      # Esperado: 1
+    print("OR(0,1):", OR(0, 1))        # Esperado: 1
+    print("XOR(1,0):", XOR(1, 0))      # Esperado: 1
+
+    # Pruebas de operaciones 16 bits
+    a_str = "0101010101010101"
+    b_str = "1010101010101010"
+    a_bits = [int(c) for c in a_str]
+    b_bits = [int(c) for c in b_str]
+    print("NOT16(a):", NOT16(a_bits))
+    print("AND16(a, b):", AND16(a_bits, b_bits))
+    print("OR16(a, b):", OR16(a_bits, b_bits))
+    print("MUX16(a, b, 0):", MUX16(a_bits, b_bits, 0))
+    print("MUX16(a, b, 1):", MUX16(a_bits, b_bits, 1))
+
+    # Prueba de OR8WAY con 8 bits pegados: "00000001"
+    print("OR8WAY('00000001'):", OR8WAY([int(c) for c in "00000001"]))
+
+    # Prueba de MUX4WAY16 usando arreglos predefinidos
+    a = [0] * 16
+    b = [1] * 16
+    c = [0, 1] * 8
+    d = [1, 0] * 8
+    print("MUX4WAY16:", MUX4WAY16(a, b, c, d, [0, 1]))
+
+    # Prueba de MUX8WAY16 usando arreglos predefinidos
+    a = [0] * 16; b = [1] * 16; c = [0, 1] * 8; d = [1, 0] * 8
+    e = [0] * 16; f = [1] * 16; g = [0, 1] * 8; h = [1, 0] * 8
+    print("MUX8WAY16:", MUX8WAY16(a, b, c, d, e, f, g, h, [0, 1, 0]))
+
+    # Prueba de DMUX4WAY para inp=1 y selección [1, 0]
+    print("DMUX4WAY(1, [1, 0]):", DMUX4WAY(1, [1, 0]))
+
+    # Prueba de DMUX8WAY para inp=1 y selección [1, 0, 1]
+    print("DMUX8WAY(1, [1, 0, 1]):", DMUX8WAY(1, [1, 0, 1]))
