@@ -132,3 +132,82 @@ def DMUX8WAY(inp, sel):
     low_group = DMUX4WAY(a, [sel[1], sel[0]])
     high_group = DMUX4WAY(b, [sel[1], sel[0]])
     return low_group + high_group
+````
+
+# Implementación de Chips Aritméticos - Proyecto 2
+
+En este proyecto se han implementado varios chips aritméticos siguiendo las especificaciones del curso nand2tetris.
+
+## Estructura del Proyecto
+
+- `proyecto1.py` - Implementación de chips lógicos básicos (NOT, AND, OR, etc.)
+- `proyecto2.py` - Implementación de chips aritméticos construidos a partir de los chips lógicos
+
+## Chips Implementados en Proyecto 2
+
+### HalfAdder
+- **Entradas:** a, b (dos bits)
+- **Salidas:** sum (suma de a y b, bit menos significativo), carry (acarreo, bit más significativo)
+- **Implementación:** sum = a XOR b, carry = a AND b
+
+### FullAdder
+- **Entradas:** a, b, c (tres bits)
+- **Salidas:** sum, carry
+- **Implementación:** Utiliza dos HalfAdder en cascada y una puerta OR para combinar los acarreos
+
+### Add16
+- **Entradas:** a[16], b[16] (dos buses de 16 bits)
+- **Salida:** out[16] (un bus de 16 bits)
+- **Implementación:** Conecta 16 FullAdder en cascada, propagando el acarreo
+
+### Inc16
+- **Entradas:** in[16] (un bus de 16 bits)
+- **Salida:** out[16] (un bus de 16 bits)
+- **Implementación:** Suma 1 al número de entrada usando Add16
+
+### ALU
+- **Entradas:**
+  - x[16], y[16] (dos buses de 16 bits, datos de entrada)
+  - zx, nx, zy, ny, f, no (seis bits de control)
+- **Salidas:**
+  - out[16] (un bus de 16 bits, resultado)
+  - zr (1 si out=0, 0 en caso contrario)
+  - ng (1 si out<0, 0 en caso contrario)
+- **Implementación:** Procesa los datos de entrada según los bits de control según la tabla de verdad de la ALU Hack
+
+## Tabla de Operaciones de la ALU
+
+| zx | nx | zy | ny | f | no | Operación     |
+|----|----|----|----|----|----| ------------ |
+| 1  | 0  | 1  | 0  | 1  | 0  | 0            |
+| 1  | 1  | 1  | 1  | 1  | 1  | 1            |
+| 1  | 1  | 1  | 0  | 1  | 0  | -1           |
+| 0  | 0  | 1  | 1  | 0  | 0  | x            |
+| 1  | 1  | 0  | 0  | 0  | 0  | y            |
+| 0  | 0  | 1  | 1  | 0  | 1  | !x           |
+| 1  | 1  | 0  | 0  | 0  | 1  | !y           |
+| 0  | 0  | 1  | 1  | 1  | 1  | -x           |
+| 1  | 1  | 0  | 0  | 1  | 1  | -y           |
+| 0  | 1  | 1  | 1  | 1  | 1  | x + 1        |
+| 1  | 1  | 0  | 1  | 1  | 1  | y + 1        |
+| 0  | 0  | 1  | 1  | 1  | 0  | x - 1        |
+| 1  | 1  | 0  | 0  | 1  | 0  | y - 1        |
+| 0  | 0  | 0  | 0  | 1  | 0  | x + y        |
+| 0  | 1  | 0  | 0  | 1  | 1  | x - y        |
+| 0  | 0  | 0  | 1  | 1  | 1  | y - x        |
+| 0  | 0  | 0  | 0  | 0  | 0  | x & y        |
+| 0  | 1  | 0  | 1  | 0  | 1  | x | y        |
+
+## Ejecución de Pruebas
+
+Para ejecutar las pruebas de los chips aritméticos:
+
+```bash
+python proyecto2.py
+```
+
+Las pruebas incluyen:
+- Verificación de todas las combinaciones posibles para HalfAdder y FullAdder
+- Pruebas con valores específicos para Add16 e Inc16
+- Pruebas exhaustivas de las 18 operaciones de la ALU con diferentes entradas
+- Verificación de casos especiales con valores en complemento a dos
