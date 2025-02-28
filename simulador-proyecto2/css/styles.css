@@ -92,11 +92,23 @@ main {
 #visualization-container {
     overflow: auto;
     text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: rgba(236, 240, 241, 0.3);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #chip-canvas {
     background-color: white;
     border: 1px solid #ddd;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    height: 450px; /* Ajustar altura para mejor visualización */
 }
 
 .bit-input, .bit-output {
@@ -194,4 +206,37 @@ footer {
     text-align: center;
     padding: 1rem;
     margin-top: 2rem;
+}
+
+/* Estilos adicionales para mejorar la visualización */
+.bit-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    font-weight: bold;
+    margin: 1px;
+}
+
+.bit-box.on {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.bit-box.off {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.bit16-input, .bit16-output {
+    margin: 10px 0;
+}
+
+.input-description {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-left: 5px;
 }
