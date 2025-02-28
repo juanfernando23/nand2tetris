@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Chips - Proyecto 2</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Simulador Visual de Chips Aritméticos</h1>
+        <nav>
+            <ul id="chip-selector">
+                <li data-chip="halfadder" class="active">Medio Sumador (HalfAdder)</li>
+                <li data-chip="fulladder">Sumador Completo (FullAdder)</li>
+                <li data-chip="add16">Sumador 16 bits (Add16)</li>
+                <li data-chip="inc16">Incrementador (Inc16)</li>
+                <li data-chip="alu">ALU</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="simulator-container">
+            <div class="panel">
+                <h2>Entradas</h2>
+                <div id="inputs-container">
+                    <!-- Los inputs se generarán dinámicamente según el chip seleccionado -->
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Visualización</h2>
+                <div id="visualization-container">
+                    <canvas id="chip-canvas" width="600" height="400"></canvas>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Salidas</h2>
+                <div id="outputs-container">
+                    <!-- Las salidas se generarán dinámicamente según el chip seleccionado -->
+                </div>
+            </div>
+        </section>
+
+        <section id="chip-description">
+            <h2>Descripción</h2>
+            <div id="description-content">
+                <!-- La descripción se cargará dinámicamente -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Simulador de Chips para Arquitectura de Computadoras | Proyecto 2</p>
+    </footer>
+
+    <script src="js/gates.js"></script>
+    <script src="js/chips.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
