@@ -30,7 +30,22 @@ header {
 }
 
 h1 {
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos para los créditos en la parte superior */
+.top-credits {
+    font-size: 0.85rem;
     margin-bottom: 1rem;
+    padding: 0.3rem 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.top-credits p {
+    margin: 0;
+    opacity: 0.9;
+    font-style: italic;
 }
 
 nav ul {
@@ -204,8 +219,28 @@ footer {
     background-color: var(--dark-color);
     color: white;
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem;
     margin-top: 2rem;
+}
+
+.credits {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.credits p {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.credits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.credits li {
+    display: inline-block;
+    margin: 0 10px;
 }
 
 /* Estilos adicionales para mejorar la visualización */

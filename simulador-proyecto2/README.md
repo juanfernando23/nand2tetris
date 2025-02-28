@@ -31,4 +31,10 @@ Suma dos números de 16 bits representados en complemento a 2.
 Incrementa en 1 un número de 16 bits.
 
 ### ALU (Unidad Aritmético-Lógica)
-Implementa la ALU de la arquitectura Hack, capaz de realizar múltiples operaciones aritmé
+Implementa la ALU de la arquitectura Hack, capaz de realizar múltiples operaciones aritméticas y lógicas según los bits de control.
+
+## Autores
+
+- Juan Fernando Ballesteros Macias
+- Jesus David Santodomingo Carrascal
+- Camilo Iván Palacio Perez
