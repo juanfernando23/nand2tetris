@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nand to Tetris - Simulador de Componentes de Memoria</title>
+  <!-- Enlazamos el archivo CSS externo -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Nand to Tetris - Simulador de Componentes de Memoria</h1>
+    <p class="autores">Autores: Juan Fernando Ballesteros Macias, Jesús David Santodomingo Carrascal, Camilo Iván Palacio Perez</p>
+  </header>
+
+  <div class="container">
+    <!-- Barra lateral con el menú de componentes -->
+    <nav class="sidebar">
+      <ul>
+        <li><a href="#" data-section="bitSection" class="active">Bit</a></li>
+        <li><a href="#" data-section="registerSection">Registro de 16 bits</a></li>
+        <li><a href="#" data-section="ram8Section">RAM8 (8 registros)</a></li>
+        <li><a href="#" data-section="ram64Section">RAM64</a></li>
+        <li><a href="#" data-section="ram512Section">RAM512</a></li>
+        <li><a href="#" data-section="ram4kSection">RAM4K</a></li>
+        <li><a href="#" data-section="ram16kSection">RAM16K</a></li>
+        <li><a href="#" data-section="pcSection">Contador de Programa</a></li>
+      </ul>
+    </nav>
+
+    <!-- Contenedor principal para cada sección -->
+    <main class="main-content">
+      
+      <!-- Sección: BIT -->
+      <section id="bitSection" class="section visible">
+        <h2>Bit (1 bit)</h2>
+        <div class="bit-container">
+          <label for="bitInput">Entrada (0 o 1):</label>
+          <input type="number" id="bitInput" min="0" max="1" value="0" />
+          <button id="bitLoadBtn">Cargar</button>
+          <p>Salida: <span id="bitOutput">0</span></p>
+        </div>
+      </section>
+
+      <!-- Sección: Registro de 16 bits -->
+      <section id="registerSection" class="section">
+        <h2>Registro de 16 bits</h2>
+        <div class="register-container">
+          <label for="registerInput">Valor de entrada (0 - 65535):</label>
+          <input type="number" id="registerInput" min="0" max="65535" value="0" />
+          <button id="registerLoadBtn">Cargar valor</button>
+          
+          <h3>Salida del registro (16 bits):</h3>
+          <div class="bits-output" id="registerOutputContainer">
+            <!-- Aquí se mostrarán los 16 bits (0 o 1) en forma de span -->
+          </div>
+          <p>
+            <strong>Binario:</strong> <span id="registerBinaryOutput">0000000000000000</span><br />
+            <strong>Decimal:</strong> <span id="registerDecimalOutput">0</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: RAM8 (8 Registros) -->
+      <section id="ram8Section" class="section">
+        <h2>RAM8 (8 registros)</h2>
+        <div class="ram8-container">
+          <label for="ram8Address">Dirección (0-7):</label>
+          <input type="number" id="ram8Address" min="0" max="7" value="0" />
+          
+          <label for="ram8InputValue">Valor de entrada (0 - 65535):</label>
+          <input type="number" id="ram8InputValue" min="0" max="65535" value="0" />
+          
+          <button id="ram8LoadBtn">Cargar valor</button>
+          
+          <h3>Salida (Registro seleccionado):</h3>
+          <div class="bits-output" id="ram8OutputContainer">
+            <!-- Se mostrarán los 16 bits -->
+          </div>
+          <p>
+            <strong>Binario:</strong> <span id="ram8BinaryOutput">0000000000000000</span><br />
+            <strong>Decimal:</strong> <span id="ram8DecimalOutput">0</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: RAM64 -->
+      <section id="ram64Section" class="section">
+        <h2>RAM64</h2>
+        <div class="ram64-container">
+          <label for="ram64Address">Dirección (0-63):</label>
+          <input type="number" id="ram64Address" min="0" max="63" value="0" />
+          
+          <label for="ram64InputValue">Valor de entrada (0 - 65535):</label>
+          <input type="number" id="ram64InputValue" min="0" max="65535" value="0" />
+          
+          <button id="ram64LoadBtn">Cargar valor</button>
+          
+          <h3>Salida (Registro seleccionado):</h3>
+          <div class="bits-output" id="ram64OutputContainer">
+            <!-- Se mostrarán los 16 bits -->
+          </div>
+          <p>
+            <strong>Binario:</strong> <span id="ram64BinaryOutput">0000000000000000</span><br />
+            <strong>Decimal:</strong> <span id="ram64DecimalOutput">0</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: RAM512 -->
+      <section id="ram512Section" class="section">
+        <h2>RAM512</h2>
+        <div class="ram512-container">
+          <label for="ram512Address">Dirección (0-511):</label>
+          <input type="number" id="ram512Address" min="0" max="511" value="0" />
+          
+          <label for="ram512InputValue">Valor de entrada (0 - 65535):</label>
+          <input type="number" id="ram512InputValue" min="0" max="65535" value="0" />
+          
+          <button id="ram512LoadBtn">Cargar valor</button>
+          
+          <h3>Salida (Registro seleccionado):</h3>
+          <div class="bits-output" id="ram512OutputContainer">
+            <!-- Se mostrarán los 16 bits -->
+          </div>
+          <p>
+            <strong>Binario:</strong> <span id="ram512BinaryOutput">0000000000000000</span><br />
+            <strong>Decimal:</strong> <span id="ram512DecimalOutput">0</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: RAM4K -->
+      <section id="ram4kSection" class="section">
+        <h2>RAM4K</h2>
+        <div class="ram4k-container">
+          <label for="ram4kAddress">Dirección (0-4095):</label>
+          <input type="number" id="ram4kAddress" min="0" max="4095" value="0" />
+          
+          <label for="ram4kInputValue">Valor de entrada (0 - 65535):</label>
+          <input type="number" id="ram4kInputValue" min="0" max="65535" value="0" />
+          
+          <button id="ram4kLoadBtn">Cargar valor</button>
+          
+          <h3>Salida (Registro seleccionado):</h3>
+          <div class="bits-output" id="ram4kOutputContainer">
+            <!-- Se mostrarán los 16 bits -->
+          </div>
+          <p>
+            <strong>Binario:</strong> <span id="ram4kBinaryOutput">0000000000000000</span><br />
+            <strong>Decimal:</strong> <span id="ram4kDecimalOutput">0</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: RAM16K -->
+      <section id="ram16kSection" class="section">
+        <h2>RAM16K</h2>
+        <div class="ram16k-container">
+          <label for="ram16kAddress">Dirección (0-16383):</label>
+          <input type="number" id="ram16kAddress" min="0" max="16383" value="0" />
+          
+          <label for="ram16kInputValue">Valor de entrada (0 - 65535):</label>
+          <input type="number" id="ram16kInputValue" min="0" max="65535" value="0" />
+          
+          <button id="ram16kLoadBtn">Cargar valor</button>
+          
+          <h3>Salida (Registro seleccionado):</h3>
+          <div class="bits-output" id="ram16kOutputContainer">
+            <!-- Se mostrarán los 16 bits -->
+          </div>
+          <p>
+            <strong>Binario:</strong> <span id="ram16kBinaryOutput">0000000000000000</span><br />
+            <strong>Decimal:</strong> <span id="ram16kDecimalOutput">0</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: Contador de Programa -->
+      <section id="pcSection" class="section">
+        <h2>Contador de Programa (PC)</h2>
+        <div class="pc-container">
+          <p>
+            <strong>PC:</strong> 
+            <span id="pcBinaryOutput">0000000000000000</span>
+            (Decimal: <span id="pcDecimalOutput">0</span>)
+          </p>
+          <label for="pcLoadValue">Cargar valor (0 - 65535):</label>
+          <input type="number" id="pcLoadValue" min="0" max="65535" value="0" />
+          
+          <div class="pc-buttons">
+            <button id="pcLoadBtn">Cargar</button>
+            <button id="pcIncrementBtn">Incrementar</button>
+            <button id="pcStartAutoBtn">Iniciar Auto</button>
+            <button id="pcResetBtn">Reiniciar</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Enlazamos el archivo JS externo al final del body -->
+  <script src="script.js"></script>
+</body>
+</html>

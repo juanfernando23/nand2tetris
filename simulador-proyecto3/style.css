@@ -1,0 +1,141 @@
+/* Reset general */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales del body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Encabezado */
+header {
+  background-color: #005a9c;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Estilo para los nombres de los autores */
+.autores {
+  font-size: 0.9em;
+  color: #ddd;
+  margin-top: 5px;
+}
+
+/* Contenedor principal para sidebar y contenido */
+.container {
+  display: flex;
+  height: calc(100vh - 80px); /* Altura total restando el header */
+}
+
+/* Estilos para la barra lateral (sidebar) */
+.sidebar {
+  background-color: #333;
+  width: 200px;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  background-color: #005a9c;
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Cada sección se oculta por defecto, solo se muestra la activa */
+.section {
+  display: none;
+  margin-bottom: 20px;
+}
+
+.section.visible {
+  display: block;
+}
+
+/* Estilos para los contenedores de cada componente */
+.bit-container,
+.register-container,
+.ram8-container,
+.ram64-container,
+.ram512-container,
+.ram4k-container,
+.ram16k-container,
+.pc-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el contenedor de salida de bits */
+.bits-output {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.bits-output span {
+  background-color: #e0e0e0;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 3px;
+  width: 30px;
+  text-align: center;
+  font-family: monospace;
+}
+
+/* Estilos para inputs y botones */
+input[type="number"] {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #005a9c;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #004080;
+}
+
+/* Estilos específicos para los botones del Contador de Programa */
+.pc-buttons {
+  margin-top: 10px;
+}
+
+.pc-buttons button {
+  margin-right: 10px;
+}
