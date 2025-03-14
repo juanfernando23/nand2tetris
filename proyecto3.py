@@ -3,22 +3,19 @@
 
 # Importar las funciones necesarias de proyecto1 y proyecto2
 from proyecto1 import (
-    MUX, DMUX, AND, NOT, XOR, NAND,
-    NOT16, AND16, OR16, MUX16, DMUX4WAY, DMUX8WAY, MUX8WAY16,MUX4WAY16, # Asegúrate de importar MUX8WAY16 aquí
-    validate_bits, validate_16bits, 
+    
+    DMUX4WAY, DMUX8WAY, MUX8WAY16,MUX4WAY16 # Asegúrate de importar MUX8WAY16 aquí
+     
 )
 from proyecto2 import Inc16, Add16  # Inc16 y Add16 del proyecto2
 
 class Bit:
-    """
-    Implementa un registro de 1 bit (Bit).
-    """
+
     def __init__(self):
         self.state = 0  # Estado inicial del bit (0 o 1)
         self._next_state = 0 # Almacena el siguiente estado para actualizar en el ciclo de reloj
 
     def output(self):
-        """Retorna el estado actual del bit."""
         return self.state
 
     def clock(self, inp, load):
