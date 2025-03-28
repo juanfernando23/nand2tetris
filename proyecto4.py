@@ -1,42 +1,86 @@
-# proyecto4_logic.py
+# proyecto4_logic_binary.py
 
-# --- Lógica de Mult.asm ---
+# Importar funciones necesarias de proyectos anteriores
+# Asegúrate de que estos archivos existan y contengan las funciones correctas
+try:
+    from proyecto1 import MUX16, OR16, AND16, NOT16 # (Y otras si son necesarias)
+    from proyecto2 import Add16, ALU # (ALU podría no ser necesaria aquí, pero Add16 sí)
+except ImportError as e:
+    print(f"Error importando de proyecto1/proyecto2: {e}")
+    print("Asegúrate de que los archivos proyecto1.py y proyecto2.py estén en el mismo directorio.")
+    # Define funciones dummy para que el script no falle completamente
+    def Add16(a, b): print("Add16 no disponible"); return [0]*16
+    # Añade otras funciones dummy si es necesario
 
-def mult(r0, r1):
-    """
-    Simula la lógica de Mult.asm para calcular r0 * r1 mediante suma repetida.
+# --- Funciones Auxiliares (Conversión y Constantes Binarias) ---
 
-    Args:
-        r0 (int): Valor en RAM[0]. Se asume r0 >= 0.
-        r1 (int): Valor en RAM[1]. Se asume r1 >= 0.
+def int_to_binary16(n):
+    """Convierte un entero a una lista binaria de 16 bits (complemento a dos)."""
+    if not isinstance(n, int):
+        raise TypeError("La entrada debe ser un entero")
+    # Manejo de números negativos usando complemento a dos para 16 bits
+    if n < 0:
+        n = (1 << 16) + n
+    # Asegurarse de que el número esté dentro del rango representable (opcional, pero bueno para positivos grandes)
+    n = n & 0xFFFF # Máscara para 16 bits
 
-    Returns:
-        int: El resultado de r0 * r1. Se asume que el resultado < 32768.
-             Retorna -1 si las precondiciones no se cumplen (opcional).
-    """
-    # Verificar precondiciones (opcional pero buena práctica)
-    if r0 < 0 or r1 < 0:
-        print("Advertencia: Se esperan valores R0 y R1 no negativos.")
-        # Podrías retornar un error o un valor especial
-        # return -1 # Indicador de error
+    binary_list = [0] * 16
+    for i in range(16):
+        if (n >> i) & 1:
+            binary_list[15 - i] = 1
+    return binary_list
 
-    # Inicializar el resultado (como si fuera R2)
-    r2 = 0
-    # Inicializar el contador del bucle (como si fuera 'i') con el valor de r1
-    i = r1
+def binary16_to_int(binary_list):
+    """Convierte una lista binaria de 16 bits a un entero (interpretando complemento a dos)."""
+    if len(binary_list) != 16 or not all(bit in (0, 1) for bit in binary_list):
+        raise ValueError("La entrada debe ser una lista de 16 bits (0s y 1s)")
 
-    # Bucle: repetir r1 veces
-    while i > 0:
-        # Sumar r0 al resultado
-        r2 = r2 + r0
-        # Decrementar el contador
-        i = i - 1
+    value = 0
+    for bit in binary_list:
+        value = (value << 1) | bit
 
-    # Verificar postcondición (opcional)
-    # if r2 >= 32768:
-    #    print("Advertencia: El resultado de la multiplicación excede 32767.")
+    # Interpretar como complemento a dos si el bit más significativo es 1
+    if binary_list[0] == 1:
+        value = value - (1 << 16)
+    return value
 
-    return r2
+# Constantes binarias de 16 bits
+ZERO16 = int_to_binary16(0)
+ONE16 = int_to_binary16(1)
+MINUS_ONE16 = int_to_binary16(-1) # Representación binaria de -1 en C2
+
+# --- Lógica de Mult.asm (Versión Binaria) ---
+
+def mult_binary(r0_bin, r1_bin):
+    
+
+    r2_bin = list(ZERO16) # Usar list() para crear una copia mutable
+
+    i_bin = list(r1_bin)
+
+    # Bucle: repetir mientras i_bin no sea cero
+    # Necesitamos una forma de comparar i_bin con cero y decrementar
+    # Esto usualmente involucraría la ALU, pero aquí lo simulamos en Python
+
+    # Convertir i_bin a entero para controlar el bucle (simplificación de la simulación)
+    # En hardware real, se usaría una comparación con 0 y un decremento binario.
+    i_int = binary16_to_int(i_bin)
+
+    while i_int > 0:
+        # Sumar r0_bin al resultado r2_bin usando el sumador binario
+        r2_bin = Add16(r2_bin, r0_bin)
+
+        # Decrementar el contador (i = i - 1)
+        # Esto requiere sumar -1 (MINUS_ONE16)
+        # i_bin = Add16(i_bin, MINUS_ONE16) # Esto es incorrecto, Add16 es para A+B
+        # Decremento real: i = i - 1. Lo simulamos en entero por facilidad
+        i_int -= 1
+
+        # Convertir de nuevo a binario si necesitáramos usar i_bin (no es estrictamente necesario aquí)
+        # i_bin = int_to_binary16(i_int) # Actualizar i_bin si se usara en comparaciones binarias
+
+    return r2_bin
+
 
 # --- Lógica de Fill.asm ---
 

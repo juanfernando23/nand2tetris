@@ -16,14 +16,14 @@
         <h1>Simulador Proyecto 4 - Nand2Tetris</h1>
         
         <div class="tabs">
-            <button class="tab-button active" onclick="showTab('mult')">Mult.asm</button>
-            <button class="tab-button" onclick="showTab('fill')">Fill.asm</button>
+            <button class="tab-button active" onclick="showTab('mult')">Mult.py</button>
+            <button class="tab-button" onclick="showTab('fill')">Fill.py</button>
         </div>
         
-        <!-- Simulador de Mult.asm -->
+        <!-- Simulador de Mult.py -->
         <div id="mult" class="tab-content active">
-            <h2>Simulador de Mult.asm</h2>
-            <p>Este simulador muestra el proceso de multiplicación por sumas repetidas.</p>
+            <h2>Simulador de Mult.py</h2>
+            <p>Este simulador muestra el proceso de multiplicación por sumas repetidas a nivel binario, presentando los resultados en decimal.</p>
             
             <div class="input-group">
                 <div>
@@ -44,29 +44,49 @@
                     <div class="register">
                         <span>R0:</span>
                         <span id="mult-r0-value">5</span>
+                        <div class="binary-representation">
+                            <span class="binary-label">Binario:</span>
+                            <span id="mult-r0-binary">0000000000000101</span>
+                        </div>
                     </div>
                     <div class="register">
                         <span>R1:</span>
                         <span id="mult-r1-value">3</span>
+                        <div class="binary-representation">
+                            <span class="binary-label">Binario:</span>
+                            <span id="mult-r1-binary">0000000000000011</span>
+                        </div>
                     </div>
                     <div class="register highlighted">
                         <span>R2 (resultado):</span>
                         <span id="mult-r2-value">0</span>
+                        <div class="binary-representation">
+                            <span class="binary-label">Binario:</span>
+                            <span id="mult-r2-binary">0000000000000000</span>
+                        </div>
                     </div>
                     <div class="register">
                         <span>i (contador):</span>
                         <span id="mult-i-value">3</span>
+                        <div class="binary-representation">
+                            <span class="binary-label">Binario:</span>
+                            <span id="mult-i-binary">0000000000000011</span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="code-display">
                     <pre id="mult-code">
-// Bucle: repetir r1 veces
+// Inicializar: R2 = 0, i = R1
+// (Representación interna es binaria)
+
+// Bucle: repetir mientras i > 0
 while i > 0:
-    // Sumar r0 al resultado
-    r2 = r2 + r0
-    // Decrementar el contador
-    i = i - 1
+    // Sumar R0 al resultado usando Add16
+    R2 = Add16(R2, R0)
+    
+    // Decrementar i usando Add16(i, -1)
+    i = Add16(i, MINUS_ONE)
                     </pre>
                 </div>
                 
@@ -77,9 +97,9 @@ while i > 0:
             </div>
         </div>
         
-        <!-- Simulador de Fill.asm -->
+        <!-- Simulador de Fill.py -->
         <div id="fill" class="tab-content">
-            <h2>Simulador de Fill.asm</h2>
+            <h2>Simulador de Fill.py</h2>
             <p>Este simulador muestra cómo se llena la pantalla según la entrada del teclado.</p>
             
             <div class="input-group">

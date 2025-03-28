@@ -117,15 +117,36 @@ button:hover {
 
 .register {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     padding: 8px;
     border-bottom: 1px solid #ddd;
+}
+
+.register > span {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .register.highlighted {
     background-color: #e74c3c;
     color: white;
     font-weight: bold;
+}
+
+.binary-representation {
+    margin-top: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    background-color: #f0f8ff;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.binary-label {
+    color: #777;
+    font-size: 0.8em;
+    margin-right: 5px;
 }
 
 .code-display {
