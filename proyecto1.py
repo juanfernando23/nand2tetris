@@ -158,82 +158,44 @@ def DMUX8WAY(inp, sel):
     high_group = DMUX4WAY(b, [sel[1], sel[0]])
     return low_group + high_group
 
-def validate_bits(*args):
-    """
-    Valida que todos los argumentos sean 0 o 1.
-    Lanza ValueError si algún valor no es válido.
-    """
-    for arg in args:
-        if isinstance(arg, list):
-            for bit in arg:
-                if bit not in (0, 1):
-                    raise ValueError(f"Valor de bit inválido: {bit}. Debe ser 0 o 1")
-        elif arg not in (0, 1):
-            raise ValueError(f"Valor de bit inválido: {arg}. Debe ser 0 o 1")
-
-def validate_16bits(*arrays):
-    """
-    Valida que todos los arrays tengan 16 bits.
-    Lanza ValueError si algún array no tiene el tamaño correcto.
-    """
-    for arr in arrays:
-        if len(arr) != 16:
-            raise ValueError(f"Array debe tener 16 bits, tiene {len(arr)}")
-
 if __name__ == "__main__":
-    print("=== Pruebas exhaustivas de Proyecto1 ===")
-    
-    # Pruebas de validación
-    try:
-        validate_bits(0, 1, [0, 1, 0])
-        print("Validación de bits correcta")
-    except ValueError as e:
-        print(f"Error en validación: {e}")
+    print("=== Pruebas directas de Proyecto1 ===")
 
-    # Pruebas de puertas básicas con todas las combinaciones
-    print("\nPruebas de puertas básicas:")
-    for a in [0, 1]:
-        for b in [0, 1]:
-            print(f"NAND({a},{b}) = {NAND(a,b)}")
-            print(f"AND({a},{b}) = {AND(a,b)}")
-            print(f"OR({a},{b}) = {OR(a,b)}")
-            print(f"XOR({a},{b}) = {XOR(a,b)}")
+    # Pruebas de puertas elementales (1 bit)
+    print("NAND(1,1):", NAND(1, 1))    # Esperado: 0
+    print("NOT(1):", NOT(1))          # Esperado: 0
+    print("AND(1,1):", AND(1, 1))      # Esperado: 1
+    print("OR(0,1):", OR(0, 1))        # Esperado: 1
+    print("XOR(1,0):", XOR(1, 0))      # Esperado: 1
 
-    # Pruebas de multiplexores
-    print("\nPruebas de multiplexores:")
-    test_input = [1, 0]
-    for sel in [0, 1]:
-        result = MUX(test_input[0], test_input[1], sel)
-        print(f"MUX({test_input[0]}, {test_input[1]}, {sel}) = {result}")
+    # Pruebas de operaciones 16 bits
+    a_str = "0101010101010101"
+    b_str = "1010101010101010"
+    a_bits = [int(c) for c in a_str]
+    b_bits = [int(c) for c in b_str]
+    print("NOT16(a):", NOT16(a_bits))
+    print("AND16(a, b):", AND16(a_bits, b_bits))
+    print("OR16(a, b):", OR16(a_bits, b_bits))
+    print("MUX16(a, b, 0):", MUX16(a_bits, b_bits, 0))
+    print("MUX16(a, b, 1):", MUX16(a_bits, b_bits, 1))
 
-    # Pruebas de operaciones de 16 bits
-    print("\nPruebas de operaciones de 16 bits:")
-    a16 = [1, 0] * 8  # [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]
-    b16 = [0, 1] * 8  # [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
-    
-    try:
-        validate_16bits(a16, b16)
-        print("NOT16:", NOT16(a16))
-        print("AND16:", AND16(a16, b16))
-        print("OR16:", OR16(a16, b16))
-    except ValueError as e:
-        print(f"Error en operaciones de 16 bits: {e}")
+    # Prueba de OR8WAY con 8 bits pegados: "00000001"
+    print("OR8WAY('00000001'):", OR8WAY([int(c) for c in "00000001"]))
 
-    # Pruebas de MUX4WAY16 y MUX8WAY16
-    print("\nPruebas de multiplexores múltiples:")
-    test16_a = [1] * 16
-    test16_b = [0] * 16
-    test16_c = [1, 0] * 8
-    test16_d = [0, 1] * 8
-    
-    try:
-        result = MUX4WAY16(test16_a, test16_b, test16_c, test16_d, [0, 1])
-        print(f"MUX4WAY16 resultado: {result}")
-    except Exception as e:
-        print(f"Error en MUX4WAY16: {e}")
+    # Prueba de MUX4WAY16 usando arreglos predefinidos
+    a = [0] * 16
+    b = [1] * 16
+    c = [0, 1] * 8
+    d = [1, 0] * 8
+    print("MUX4WAY16:", MUX4WAY16(a, b, c, d, [0, 1]))
 
-    # Pruebas de DMUX
-    print("\nPruebas de demultiplexores:")
-    for sel in [0, 1]:
-        a, b = DMUX(1, sel)
-        print(f"DMUX(1, {sel}) = ({a}, {b})")
+    # Prueba de MUX8WAY16 usando arreglos predefinidos
+    a = [0] * 16; b = [1] * 16; c = [0, 1] * 8; d = [1, 0] * 8
+    e = [0] * 16; f = [1] * 16; g = [0, 1] * 8; h = [1, 0] * 8
+    print("MUX8WAY16:", MUX8WAY16(a, b, c, d, e, f, g, h, [0, 1, 0]))
+
+    # Prueba de DMUX4WAY para inp=1 y selección [1, 0]
+    print("DMUX4WAY(1, [1, 0]):", DMUX4WAY(1, [1, 0]))
+
+    # Prueba de DMUX8WAY para inp=1 y selección [1, 0, 1]
+    print("DMUX8WAY(1, [1, 0, 1]):", DMUX8WAY(1, [1, 0, 1]))
