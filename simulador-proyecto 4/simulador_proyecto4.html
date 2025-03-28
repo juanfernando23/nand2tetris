@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Proyecto 4 - Nand2Tetris</title>
+    <link rel="stylesheet" href="simulador_styles.css">
+</head>
+<body>
+    <div class="container">
+        
+        <div class="authors">
+            <p>Desarrollado por: Juan Fernando Ballesteros Macías, Jesus David Santodomingo, Camilo Iván Palacio</p>
+        </div>
+        
+        <h1>Simulador Proyecto 4 - Nand2Tetris</h1>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('mult')">Mult.asm</button>
+            <button class="tab-button" onclick="showTab('fill')">Fill.asm</button>
+        </div>
+        
+        <!-- Simulador de Mult.asm -->
+        <div id="mult" class="tab-content active">
+            <h2>Simulador de Mult.asm</h2>
+            <p>Este simulador muestra el proceso de multiplicación por sumas repetidas.</p>
+            
+            <div class="input-group">
+                <div>
+                    <label for="r0">R0 (multiplicando):</label>
+                    <input type="number" id="r0" min="0" value="5">
+                </div>
+                <div>
+                    <label for="r1">R1 (multiplicador):</label>
+                    <input type="number" id="r1" min="0" value="3">
+                </div>
+                <button onclick="runMult()">Ejecutar</button>
+                <button onclick="stepMult()">Paso a paso</button>
+                <button onclick="resetMult()">Reiniciar</button>
+            </div>
+            
+            <div class="simulation-area">
+                <div class="registers">
+                    <div class="register">
+                        <span>R0:</span>
+                        <span id="mult-r0-value">5</span>
+                    </div>
+                    <div class="register">
+                        <span>R1:</span>
+                        <span id="mult-r1-value">3</span>
+                    </div>
+                    <div class="register highlighted">
+                        <span>R2 (resultado):</span>
+                        <span id="mult-r2-value">0</span>
+                    </div>
+                    <div class="register">
+                        <span>i (contador):</span>
+                        <span id="mult-i-value">3</span>
+                    </div>
+                </div>
+                
+                <div class="code-display">
+                    <pre id="mult-code">
+// Bucle: repetir r1 veces
+while i > 0:
+    // Sumar r0 al resultado
+    r2 = r2 + r0
+    // Decrementar el contador
+    i = i - 1
+                    </pre>
+                </div>
+                
+                <div class="execution-log">
+                    <h3>Registro de ejecución</h3>
+                    <div id="mult-log" class="log-content"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Simulador de Fill.asm -->
+        <div id="fill" class="tab-content">
+            <h2>Simulador de Fill.asm</h2>
+            <p>Este simulador muestra cómo se llena la pantalla según la entrada del teclado.</p>
+            
+            <div class="input-group">
+                <div class="keyboard-status">
+                    <span>Estado del teclado: </span>
+                    <span id="key-status">No presionado (0)</span>
+                </div>
+                <button id="keyboard-btn">Presionar cualquier tecla</button>
+                <button onclick="resetFill()">Reiniciar</button>
+            </div>
+            
+            <div class="simulation-area">
+                <div class="screen-simulation">
+                    <!-- La pantalla se generará dinámicamente por JS -->
+                </div>
+                
+                <div class="memory-view">
+                    <h3>Memoria (fragmento)</h3>
+                    <div class="memory-blocks" id="memory-display">
+                        <!-- La visualización de memoria se generará por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="simulador_script.js"></script>
+</body>
+</html>
