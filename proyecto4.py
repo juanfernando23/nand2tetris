@@ -82,7 +82,7 @@ def mult_binary(r0_bin, r1_bin):
     return r2_bin
 
 
-# --- Lógica de Fill.asm ---
+# --- Lógica de Fill ---
 
 # Constantes para simular las direcciones de memoria
 SCREEN_BASE_ADDRESS = 16384
