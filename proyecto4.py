@@ -94,43 +94,22 @@ BLACK = -1 # O podríamos usar 0xFFFF si trabajáramos con unsigned 16-bit
 WHITE = 0
 
 def fill_screen_based_on_keyboard(keyboard_value):
-    """
-    Simula la lógica de decisión de Fill.asm basada en la entrada del teclado.
-    Esta función determina QUÉ color usar, pero no simula el llenado en sí.
 
-    Args:
-        keyboard_value (int): El valor leído del teclado simulado (RAM[KBD]).
-                             0 si no hay tecla presionada, != 0 si hay tecla.
 
-    Returns:
-        int: El color a usar para llenar la pantalla (BLACK o WHITE).
-    """
+
     if keyboard_value == 0:
         return WHITE
     else:
         return BLACK
 
 def simulate_fill_step(ram, keyboard_value):
-    """
-    Simula UNA pasada completa de la lógica de Fill.asm:
-    1. Lee el valor del teclado.
-    2. Determina el color.
-    3. Llena la memoria RAM simulada (área de pantalla) con ese color.
 
-    Args:
-        ram (dict): Un diccionario que simula la RAM. Las claves son direcciones.
-        keyboard_value (int): El valor actual del teclado simulado.
-    """
+    #Simula UNA pasada completa de la lógica de Fill
+    
     color_to_fill = fill_screen_based_on_keyboard(keyboard_value)
 
     # Simula el llenado de la memoria de pantalla en la RAM simulada
-    # ptr = SCREEN_BASE_ADDRESS
-    # i = SCREEN_SIZE_WORDS
-    # while i > 0:
-    #    ram[ptr] = color_to_fill
-    #    ptr += 1
-    #    i -= 1
-    # Forma más pythónica:
+
     for i in range(SCREEN_SIZE_WORDS):
         address = SCREEN_BASE_ADDRESS + i
         ram[address] = color_to_fill
