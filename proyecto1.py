@@ -1,5 +1,28 @@
 # ---------- Puertas Elementales (1 bit) ----------
 
+# ---------- Funciones de validación ----------
+
+def validate_bits(*bits):
+    """
+    Valida que todos los argumentos sean bits válidos (0 o 1).
+    Lanza una excepción si algún bit no es válido.
+    """
+    for i, bit in enumerate(bits):
+        if bit != 0 and bit != 1:
+            raise ValueError(f"El bit en la posición {i} no es válido: {bit}. Debe ser 0 o 1.")
+
+def validate_16bits(*arrays):
+    """
+    Valida que todos los argumentos sean arrays de 16 bits válidos.
+    Lanza una excepción si algún array no tiene exactamente 16 bits o contiene valores inválidos.
+    """
+    for i, array in enumerate(arrays):
+        if len(array) != 16:
+            raise ValueError(f"El array en la posición {i} debe tener exactamente 16 bits, tiene {len(array)}.")
+        for j, bit in enumerate(array):
+            if bit != 0 and bit != 1:
+                raise ValueError(f"El bit en la posición ({i},{j}) no es válido: {bit}. Debe ser 0 o 1.")
+
 def NAND(a, b):
     """
     Implementa la puerta NAND.
