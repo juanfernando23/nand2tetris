@@ -326,4 +326,4 @@ if __name__ == "__main__":
     pc.update_state()
     print(f"PC después de resetear: {pc.output()}") # Debe ser 0
 
-    print("\n¡Proyecto 3 - Memoria implementado y probado (pruebas básicas)! Para pruebas exhaustivas, se requieren tests más detallados.")
+    
