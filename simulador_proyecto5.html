@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Proyecto 5 - Computadora Hack</title>
+    <link rel="stylesheet" href="simulador_proyecto5.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador Computadora Hack (Proyecto 5)</h1>
+        <div class="authors">
+            <p>Basado en el trabajo de: Juan Fernando Ballesteros Macías, Jesus David Santodomingo, Camilo Iván Palacio</p>
+        </div>
+
+        <div class="controls">
+            <button id="reset-btn">Reiniciar</button>
+            <button id="step-btn">Paso</button>
+            <button id="run-btn">Ejecutar</button>
+            <button id="stop-btn" disabled>Detener</button>
+            <label for="speed-slider">Velocidad:</label>
+            <input type="range" id="speed-slider" min="1" max="1000" value="500">
+            <span id="speed-value">500 ms</span>
+        </div>
+
+        <div class="simulation-layout">
+            <!-- Columna Izquierda: CPU y ROM -->
+            <div class="left-column">
+                <div class="cpu-state panel">
+                    <h2>CPU</h2>
+                    <div class="register-display">
+                        <span>PC:</span>
+                        <span id="pc-value">0</span>
+                    </div>
+                    <div class="register-display">
+                        <span>A:</span>
+                        <span id="a-reg-value">0</span>
+                    </div>
+                    <div class="register-display">
+                        <span>D:</span>
+                        <span id="d-reg-value">0</span>
+                    </div>
+                    <div class="instruction-display">
+                        <span>Instrucción:</span>
+                        <span id="instruction-value">[0000000000000000]</span>
+                    </div>
+                     <div class="decoded-instruction">
+                        <span>Decodificada:</span>
+                        <span id="decoded-value">-</span>
+                    </div>
+                </div>
+
+                <div class="rom-view panel">
+                    <h2>ROM (Programa)</h2>
+                    <ul id="rom-list">
+                        <!-- Las instrucciones se cargarán aquí -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Memoria (RAM, Screen, Keyboard) -->
+            <div class="right-column">
+                <div class="memory-view panel">
+                    <h2>Memoria</h2>
+                    <div class="memory-controls">
+                         <label for="ram-address">Ver RAM:</label>
+                         <input type="number" id="ram-address" value="0" min="0" max="16383">
+                         <button id="goto-ram-btn">Ir</button>
+                    </div>
+                    <div id="ram-display">
+                        <!-- Vista de la RAM -->
+                    </div>
+                     <div class="keyboard-display">
+                        <span>Teclado (Dir 24576):</span>
+                        <span id="keyboard-value">0</span>
+                        <input type="text" id="key-input" maxlength="1" placeholder="Presiona tecla aquí"/>
+                    </div>
+                </div>
+
+                <div class="screen-view panel">
+                    <h2>Pantalla (Dir 16384-24575)</h2>
+                    <canvas id="screen-canvas" width="512" height="256"></canvas>
+                     <p class="note">Memoria visual de la computadora Hack (512x256 pixels)</p>
+                </div>
+            </div>
+        </div>
+         <div class="status-log panel">
+             <h2>Registro (Log)</h2>
+             <pre id="log-output"></pre>
+         </div>
+    </div>
+
+    <script src="simulador_proyecto5.js"></script>
+</body>
+</html>

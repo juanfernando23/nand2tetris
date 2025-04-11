@@ -1,0 +1,209 @@
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #0056b3;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h2 {
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 0;
+}
+
+.authors {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.controls button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #0056b3;
+}
+
+.controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.controls label {
+    margin-left: 10px;
+}
+
+.controls input[type="range"] {
+    cursor: pointer;
+}
+
+.simulation-layout {
+    display: flex;
+    gap: 20px;
+}
+
+.left-column, .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panel {
+    background: #f8f9fa;
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.register-display, .instruction-display, .decoded-instruction, .keyboard-display {
+    margin-bottom: 8px;
+    font-family: monospace;
+    font-size: 1.1em;
+}
+
+.register-display span:first-child,
+.instruction-display span:first-child,
+.decoded-instruction span:first-child,
+.keyboard-display span:first-child {
+    display: inline-block;
+    width: 100px; /* Ajusta según sea necesario */
+    font-weight: bold;
+    color: #555;
+}
+
+#instruction-value {
+    word-break: break-all;
+}
+
+.rom-view ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.9em;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.rom-view li {
+    padding: 2px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.rom-view li.active {
+    background-color: #d4edda;
+    font-weight: bold;
+}
+
+.memory-controls {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.memory-controls input[type="number"] {
+    width: 80px;
+    padding: 5px;
+}
+
+.memory-controls button {
+     padding: 5px 10px;
+}
+
+
+#ram-display {
+    font-family: monospace;
+    font-size: 0.9em;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+}
+
+#ram-display div {
+    white-space: pre;
+}
+
+.keyboard-display {
+    margin-top: 15px;
+}
+
+#key-input {
+    width: 150px;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+#screen-canvas {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    /* Mantener la proporción correcta */
+    width: 100%;
+    max-width: 512px;
+    height: auto;
+    aspect-ratio: 512 / 256;
+}
+
+.note {
+    font-size: 0.8em;
+    color: #888;
+    text-align: center;
+}
+
+.status-log {
+    margin-top: 20px;
+}
+
+#log-output {
+    font-family: monospace;
+    font-size: 0.9em;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #e9ecef;
+    border: 1px solid #ccc;
+    padding: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

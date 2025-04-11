@@ -2,8 +2,8 @@
 # Implementación del Proyecto 5 de Nand to Tetris en Python - Computadora Hack
 
 # Importar las funciones y componentes necesarios de proyectos anteriores
-from proyecto1 import MUX16, NOT16, AND16, OR16, OR, AND, NOT
-from proyecto2 import Add16, Inc16, ALU
+
+from proyecto2 import  ALU
 from proyecto3 import Register, PC, RAM16K
 from proyecto4 import int_to_binary16, binary16_to_int
 
