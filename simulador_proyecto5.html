@@ -77,17 +77,19 @@
                     </div>
                 </div>
 
-                <div class="screen-view panel">
+                <div class="status-log panel">
+                    <h2>Registro (Log)</h2>
+                    <pre id="log-output"></pre>
+                </div>
+                
+                <!-- Pantalla oculta -->
+                <div class="screen-view panel" style="display: none;">
                     <h2>Pantalla (Dir 16384-24575)</h2>
                     <canvas id="screen-canvas" width="512" height="256"></canvas>
-                     <p class="note">Memoria visual de la computadora Hack (512x256 pixels)</p>
+                    <p class="note">Memoria visual de la computadora Hack (512x256 pixels)</p>
                 </div>
             </div>
         </div>
-         <div class="status-log panel">
-             <h2>Registro (Log)</h2>
-             <pre id="log-output"></pre>
-         </div>
     </div>
 
     <script src="simulador_proyecto5.js"></script>
