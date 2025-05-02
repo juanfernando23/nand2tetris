@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Ensamblador Hack - Proyecto 6</title>
+    <link rel="stylesheet" href="simulador_proyecto6.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.6/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.6/theme/dracula.min.css">
+</head>
+<body>
+    <header>
+        <h1>Simulador de Ensamblador Hack</h1>
+        <div class="authors">
+            <p>Desarrollado por: Juan Fernando Ballesteros Macías, Jesus David Santodomingo, Camilo Iván Palacio</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="code-section">
+            <div class="code-header">
+                <h2>Código Ensamblador (.asm)</h2>
+                <div class="file-controls">
+                    <button id="load-example-btn" class="control-btn">Cargar Ejemplo</button>
+                    <button id="load-file-btn" class="control-btn">Cargar Archivo</button>
+                    <input type="file" id="file-input" accept=".asm" style="display: none;">
+                </div>
+            </div>
+            <textarea id="assembly-code" placeholder="// Escribe tu código ensamblador Hack aquí..."></textarea>
+        </div>
+
+        <div class="controls">
+            <button id="assemble-btn" class="primary-btn">Ensamblar</button>
+            <div class="execution-controls">
+                <button id="step1-btn" class="exec-btn">Ejecutar Pasada 1</button>
+                <button id="step2-btn" class="exec-btn">Ejecutar Pasada 2</button>
+                <button id="reset-btn" class="exec-btn">Reiniciar</button>
+            </div>
+        </div>
+
+        <div class="result-section">
+            <div class="result-tabs">
+                <button class="tab-btn active" data-tab="binary">Código Binario</button>
+                <button class="tab-btn" data-tab="symbol-table">Tabla de Símbolos</button>
+                <button class="tab-btn" data-tab="visualization">Visualización</button>
+            </div>
+            
+            <div class="tab-content active" id="binary-content">
+                <h2>Código Máquina (.hack)</h2>
+                <div id="binary-code" class="result-display"></div>
+            </div>
+            
+            <div class="tab-content" id="symbol-table-content">
+                <h2>Tabla de Símbolos</h2>
+                <div class="table-container">
+                    <table id="symbol-table">
+                        <thead>
+                            <tr>
+                                <th>Símbolo</th>
+                                <th>Dirección</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- La tabla de símbolos se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="visualization-content">
+                <h2>Visualización del Proceso</h2>
+                <div class="visualization-area">
+                    <div class="process-diagram">
+                        <div class="step-box" id="input-box">
+                            <h3>Entrada</h3>
+                            <div class="code-preview" id="input-preview"></div>
+                        </div>
+                        <div class="step-arrow">&rarr;</div>
+                        <div class="step-box" id="first-pass-box">
+                            <h3>Primera Pasada</h3>
+                            <p>Construye la tabla de símbolos</p>
+                            <div class="step-details" id="first-pass-details"></div>
+                        </div>
+                        <div class="step-arrow">&rarr;</div>
+                        <div class="step-box" id="second-pass-box">
+                            <h3>Segunda Pasada</h3>
+                            <p>Traduce a código binario</p>
+                            <div class="step-details" id="second-pass-details"></div>
+                        </div>
+                        <div class="step-arrow">&rarr;</div>
+                        <div class="step-box" id="output-box">
+                            <h3>Salida</h3>
+                            <div class="code-preview" id="output-preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="log-section">
+        <h3>Registro de Ensamblado</h3>
+        <div id="assembly-log" class="log-content"></div>
+    </div>
+
+    <footer>
+        <p>Simulador del Proyecto 6 - Nand2Tetris</p>
+    </footer>
+
+    <!-- Scripts externos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.6/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.6/mode/javascript/javascript.min.js"></script>
+    <script src="simulador_proyecto6.js"></script>
+</body>
+</html>
